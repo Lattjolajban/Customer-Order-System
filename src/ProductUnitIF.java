@@ -8,7 +8,7 @@ import javax.swing.JTextPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 
-import com.sun.glass.ui.Window;
+
 
 import javax.swing.JFormattedTextField;
 import javax.swing.JSeparator;
@@ -22,7 +22,7 @@ public class ProductUnitIF extends MenuIF{
 	private JTextField textField_category;
 	private JTextField textField_price;
 	private JTextField textField_serialNumber;
-	private Controller controller;
+	
 	
 	/**
 	 * Launch the application.
@@ -60,9 +60,7 @@ public class ProductUnitIF extends MenuIF{
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		CustomerRegister customerRegister = new CustomerRegister();
-		ProductRegister productRegister = new ProductRegister();
-		controller = new Controller(customerRegister, productRegister, frame);
+
 		
 		
 		

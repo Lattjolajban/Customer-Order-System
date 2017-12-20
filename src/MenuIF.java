@@ -7,13 +7,20 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JPanel;
 
 public class MenuIF {
 
 	private JFrame frame;
-	private Controller controller;
-	private ProductRegister productRegister;
-	private CustomerRegister customerRegister = new CustomerRegister();
+	ProductRegister productRegister;
+	CustomerRegister customerRegister;
+	JFrame productUnitIF;
+	JFrame customerOrderIF;
+	Product product;
+	Unit unit;
+	Controller controller = new Controller(customerRegister, productRegister, frame, productUnitIF, customerOrderIF, product, unit);
+	private final JPanel panel = new JPanel();
+	
 
 
 	/**
@@ -45,12 +52,12 @@ public class MenuIF {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 292, 203);
+		frame.setBounds(100, 100, 495, 452);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		productRegister = new ProductRegister();
-		controller = new Controller(customerRegister, productRegister, frame);
+		
+		
 		
 		JLabel lblStart = new JLabel("Startmeny");
 		lblStart.setBounds(108, 11, 74, 14);
@@ -84,5 +91,12 @@ public class MenuIF {
 		});
 		btnAvsluta.setBounds(177, 131, 89, 23);
 		frame.getContentPane().add(btnAvsluta);
+		panel.setBounds(28, 239, 197, 109);
+		frame.getContentPane().add(panel);
+		panel.setLayout(null);
+		
+		JButton btnNewButton = new JButton("New button");
+		btnNewButton.setBounds(52, 11, 89, 23);
+		panel.add(btnNewButton);
 	}
 }
