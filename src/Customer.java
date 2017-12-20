@@ -43,8 +43,13 @@ public class Customer {
 		orderList.add(o);
 	}
 
-	public void removeOrder(Order o) {
-		orderList.remove(o);
+	public void removeOrder(String orderID) {
+		for (Order order : orderList) {
+			if (order.getOrderID().equals(orderID)) {
+				orderList.remove(order);
+			}
+		}
+		
 	}
 
 	public Order findOrder(String orderID) {

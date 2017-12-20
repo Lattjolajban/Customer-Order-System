@@ -4,7 +4,7 @@ public class Product {
 	private String name;
 	private String category;
 	private double price;
-	private ArrayList<Unit> UnitList = new ArrayList <Unit>();
+	private ArrayList<Unit> unitList = new ArrayList <Unit>();
 
 	public String getName() {
 		return name;
@@ -31,27 +31,27 @@ public class Product {
 	}
 
 	public ArrayList <Unit> getUnitList() {
-		return UnitList;
+		return unitList;
 	}
 
 	public void setUnitList(ArrayList <Unit> UnitList) {
-		this.UnitList = UnitList;
+		this.unitList = UnitList;
 	}
 
 	public void addUnit(Unit e) {
-		UnitList.add(e);
+		unitList.add(e);
 	}
 
 	public void removeUnit(String serialNumber) {
-		for (Unit e : UnitList) {
+		for (Unit e : unitList) {
 			if (e.getSerialNumber().equals(serialNumber)) {
-				UnitList.remove(e);
+				unitList.remove(e);
 			}
 		}
 	}
 
 	public Unit findUnit(String serialNumber) {
-		for (Unit u : UnitList) {
+		for (Unit u : unitList) {
 			if (u.getSerialNumber().equals(serialNumber)) {
 				return u;
 			}
