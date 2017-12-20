@@ -67,6 +67,8 @@ public class TestMethod {
 		System.out.println(customer1.summeraOrder("order1"));
 		line1.PlusOnequantity(3);
 		
+		System.out.println ("Hello World!");
+		
 	}
 
 }
