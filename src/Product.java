@@ -43,9 +43,9 @@ public class Product {
 	}
 
 	public void removeUnit(String serialNumber) {
-		for (Unit e : unitList) {
-			if (e.getSerialNumber().equals(serialNumber)) {
-				unitList.remove(e);
+		for (Unit unit : unitList) {
+			if (unit.getSerialNumber().equals(serialNumber)) {
+				unitList.remove(unit);
 			}
 		}
 	}

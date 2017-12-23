@@ -37,7 +37,7 @@ public class InterFace {
 	private ProductRegister productRegister;
 	private CustomerRegister customerRegister;
 	
-	String historik; // HISTORIK FÖR OUTPUT. EJ KLAR!
+
 	private JTextField textField_customerName;
 	private JTextField textField_address;
 	private JTextField textField_customerNumber;
@@ -91,6 +91,12 @@ public class InterFace {
 		panelMenu.setVisible(true);
 		
 		JButton btnCustomerOrderButton = new JButton("Kund & Order");
+		btnCustomerOrderButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				panelCustomerOrder.show();
+				panelMenu.hide();
+			}
+		});
 		btnCustomerOrderButton.setBounds(189, 45, 132, 44);
 		panelMenu.add(btnCustomerOrderButton);
 		
@@ -417,16 +423,26 @@ public class InterFace {
 		scrollPane_1.setBounds(260, 30, 267, 268);
 		panelCustomerOrder.add(scrollPane_1);
 		
-		JTextArea TextOutput_2 = new JTextArea();
-		TextOutput_2.setColumns(10);
-		TextOutput_2.setRows(1);
-		TextOutput_2.setWrapStyleWord(true);
-		TextOutput_2.setLineWrap(true);
-		scrollPane_1.setViewportView(TextOutput_2);
+		JTextArea textOutput_2 = new JTextArea();
+		textOutput_2.setColumns(10);
+		textOutput_2.setRows(1);
+		textOutput_2.setWrapStyleWord(true);
+		textOutput_2.setLineWrap(true);
+		textOutput_2.setEditable(false);
+		scrollPane_1.setViewportView(textOutput_2);
+		
 		
 		JButton button = new JButton("Tillbaka");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelMenu.show();
+				panelCustomerOrder.hide();
+			}
+		});
 		button.setBounds(436, 415, 85, 23);
 		panelCustomerOrder.add(button);
+		
+		
 		
 		JLabel lblCustomer = new JLabel("Kund");
 		lblCustomer.setBounds(95, 10, 46, 14);
@@ -476,18 +492,102 @@ public class InterFace {
 		panelCustomerOrder.add(lblDeliveryDate);
 		
 		JButton btnAddCustomer = new JButton("Skapa");
+		btnAddCustomer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String name = textField_customerName.getText();
+				String address = textField_address.getText();
+				String customerNumber = textField_customerNumber.getText();
+				Customer customer = controller.findCustomer(customerNumber);
+				
+				if (textField_customerName.getText().isEmpty () || textField_customerNumber.getText().isEmpty()) {
+					textOutput_2.append("Fyll i namn och kundnummer\n");
+				}
+				
+				
+				
+				else if (customer != null) {
+					textOutput_2.append("En kund med det kundnumret finns redan i registret \n");
+				}
+				else {
+					controller.addCustomer(name, address, customerNumber);
+					if (controller.findCustomer(customerNumber)!=null) {
+						textOutput_2.append("En kund med namnet: "+ name + " och kundnummer "+ customerNumber +" har lagts till i registret \n" );
+					}
+					if (controller.findCustomer(customerNumber)==null) {
+						textOutput_2.append("Kunden lades inte till på grund av oväntat fel\n");
+					}
+					
+				}
+				textField_customerName.setText("");
+				textField_address.setText("");
+				textField_customerNumber.setText("");
+		
+			}
+		});
 		btnAddCustomer.setBounds(25, 105, 85, 23);
 		panelCustomerOrder.add(btnAddCustomer);
 		
 		JButton btnSearchCustomer = new JButton("Sök");
+		btnSearchCustomer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String customerNumber = textField_customerNumber.getText();
+				Customer customer = controller.findCustomer(customerNumber);
+				
+				if (textField_customerNumber.getText().isEmpty()) {
+					textOutput_2.append("Fyll i kundnummer för att söka\n");
+				}
+				else if (customer== null) {
+					textOutput_2.append("Det finns inte en kund med serienummer: " + customerNumber + " i registret \n" );
+				}
+				else {
+					textOutput_2.append("En sökning på serienumret " + customerNumber + " har namnet " + customer.getName() +".\n");
+				}
+				textField_customerName.setText("");
+				textField_address.setText("");
+				textField_customerNumber.setText("");
+			
+			
+			}
+			});
 		btnSearchCustomer.setBounds(115, 105, 85, 23);
 		panelCustomerOrder.add(btnSearchCustomer);
 		
 		JButton btnChangeCustomer = new JButton("Ändra");
+		btnChangeCustomer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String customerNumber = textField_customerNumber.getText();
+				String name = textField_customerName.getText();
+				String address = textField_address.getText();
+				Customer customer = controller.findCustomer(customerNumber);
+				
+				if (textField_customerName.getText().isEmpty() || textField_address.getText().isEmpty() || textField_customerNumber.getText().isEmpty()) {
+					textOutput_2.append("Fyll i alla kundfält \n");
+				}
+				else if (customer == null) {
+					textOutput_2.append("Kund med kundnummer " + customerNumber + " finns inte i registret \n");
+				}
+				else {
+					String tempName = customer.getName();
+					String tempAddress = customer.getAddress();
+					controller.changeCustomer(name, address, customerNumber);
+					textOutput_2.append("Kund med kundnummer " + customer.getCustomerNumber() + " har ändrat namn och address från: \nNamn: " + tempName + "\nAdress: " + tempAddress + "\ntill \nNamn: " + customer.getName() + "\nAdress: " + customer.getAddress() +"\n");
+					
+				}
+				textField_customerName.setText("");
+				textField_address.setText("");
+				textField_customerNumber.setText("");
+			}
+			});
 		btnChangeCustomer.setBounds(25, 130, 85, 23);
 		panelCustomerOrder.add(btnChangeCustomer);
 		
+		
 		JButton btnRemoveCustomer = new JButton("Ta bort");
+		btnRemoveCustomer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+			});
 		btnRemoveCustomer.setBounds(115, 130, 85, 23);
 		panelCustomerOrder.add(btnRemoveCustomer);
 		
@@ -506,10 +606,20 @@ public class InterFace {
 		panelCustomerOrder.add(separator_3);
 		
 		JButton btnAddOrder = new JButton("Skapa");
+		btnAddOrder.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+			});
 		btnAddOrder.setBounds(25, 240, 85, 23);
 		panelCustomerOrder.add(btnAddOrder);
 		
 		JButton btnRemoveOrder = new JButton("Ta bort");
+		btnRemoveOrder.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+			});
 		btnRemoveOrder.setBounds(115, 240, 85, 23);
 		panelCustomerOrder.add(btnRemoveOrder);
 		
@@ -536,6 +646,11 @@ public class InterFace {
 		textField_quantity.setColumns(10);
 		
 		JButton btnAddOrderLine = new JButton("Lägg till");
+		btnAddOrderLine.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+			});
 		btnAddOrderLine.setBounds(25, 345, 85, 23);
 		panelCustomerOrder.add(btnAddOrderLine);
 		
@@ -549,6 +664,11 @@ public class InterFace {
 		textField_OrderLineNumber.setColumns(10);
 		
 		JButton btnRemoveOrderLine = new JButton("Ta bort");
+		btnRemoveOrderLine.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+			});
 		btnRemoveOrderLine.setBounds(25, 415, 85, 23);
 		panelCustomerOrder.add(btnRemoveOrderLine);
 		
