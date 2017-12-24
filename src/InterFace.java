@@ -43,9 +43,9 @@ public class InterFace {
 	private JTextField textField_customerNumber;
 	private JTextField textField_orderId;
 	private JTextField textField_deliveryDate;
-	private JTextField textField_product2;
+	private JTextField textField_productName;
 	private JTextField textField_quantity;
-	private JTextField textField_OrderLineNumber;
+	private JTextField textField_orderLineNumber;
 
 	/**
 	 * Launch the application.
@@ -608,6 +608,31 @@ public class InterFace {
 		JButton btnAddOrder = new JButton("Skapa");
 		btnAddOrder.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String orderID = textField_orderId.getText();
+				String deliveryDate = textField_deliveryDate.getText();
+				String customerNumber = textField_customerNumber.getText();
+				Customer customer = controller.findCustomer(customerNumber);
+				Order order = controller.findOrder(orderID);
+				
+				if (textField_orderId.getText().isEmpty() || textField_deliveryDate.getText().isEmpty() || textField_customerNumber.getText().isEmpty()) {
+					textOutput_2.append("Fyll i ett orderID och leveransdatum \n");
+				}
+				else if (order != null) {
+					textOutput_2.append("Ordern du försöker skapa finns redan \n");
+				}
+				else {
+					controller.addOrder(orderID, deliveryDate, customerNumber);
+					if (customer == null ) {
+						textOutput_2.append("Det finns ingen med kundnummer " + customerNumber + ".\n");
+					}
+					else {
+						textOutput_2.append("En order med id " + order.getOrderID() + " har skapats med leverans den " + order.getDeliveryDate() + " på kundnummer " + customer.getCustomerNumber() + ".\n" );
+					}
+					
+				}
+				textField_customerNumber.setText("");
+				textField_deliveryDate.setText("");
+				textField_orderId.setText("");
 				
 			}
 			});
@@ -635,10 +660,10 @@ public class InterFace {
 		lblQuantity.setBounds(27, 325, 46, 14);
 		panelCustomerOrder.add(lblQuantity);
 		
-		textField_product2 = new JTextField();
-		textField_product2.setBounds(115, 300, 85, 20);
-		panelCustomerOrder.add(textField_product2);
-		textField_product2.setColumns(10);
+		textField_productName = new JTextField();
+		textField_productName.setBounds(115, 300, 85, 20);
+		panelCustomerOrder.add(textField_productName);
+		textField_productName.setColumns(10);
 		
 		textField_quantity = new JTextField();
 		textField_quantity.setBounds(115, 325, 85, 20);
@@ -648,6 +673,34 @@ public class InterFace {
 		JButton btnAddOrderLine = new JButton("Lägg till");
 		btnAddOrderLine.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String name = textField_productName.getText();
+				int quantity = Integer.parseInt(textField_quantity.getText());
+				String orderID = textField_orderId.getText();
+				String orderLineNumber = textField_orderLineNumber.getText();
+				Order order = controller.findOrder(orderID);
+				Product product = controller.findProduct(name);
+				OrderLine orderLine = controller.findOrderLine(orderLineNumber);
+				
+				if (textField_productName.getText().isEmpty() || textField_quantity.getText().isEmpty() || textField_orderId.getText().isEmpty()) {
+					textOutput_2.append("Fyll i orderID, produktnamn och antal \n");
+				}
+				else if (order == null) {
+					textOutput_2.append("En order med det orderID:t finns inte i systemet \n");
+				}
+				else if (order !=null && product==null ) {
+					textOutput_2.append("Det går inte att lägga till produkten i ordern då produkten inte finns \n");
+				}
+				else if (order!=null && product != null && orderLine != null ) {
+					textOutput_2.append("Ordern har redan en sådan produkt på den angivna orderraden \n");
+				}
+				else {
+					controller.addOrderLines(orderID, product, quantity, orderLineNumber);
+					textOutput_2.append(orderLine.getQuantity() + " st av " + product.getName() + " har lagts till på orderrad " + orderLine.getNumber() + " i order " + order.getOrderID() +"\n" );
+					
+				}
+				textField_productName.setText("");
+				textField_orderId.setText("");
+				textField_orderLineNumber.setText("");
 				
 			}
 			});
@@ -658,10 +711,10 @@ public class InterFace {
 		lblOrderLineNumber.setBounds(25, 385, 89, 14);
 		panelCustomerOrder.add(lblOrderLineNumber);
 		
-		textField_OrderLineNumber = new JTextField();
-		textField_OrderLineNumber.setBounds(115, 383, 85, 20);
-		panelCustomerOrder.add(textField_OrderLineNumber);
-		textField_OrderLineNumber.setColumns(10);
+		textField_orderLineNumber = new JTextField();
+		textField_orderLineNumber.setBounds(115, 383, 85, 20);
+		panelCustomerOrder.add(textField_orderLineNumber);
+		textField_orderLineNumber.setColumns(10);
 		
 		JButton btnRemoveOrderLine = new JButton("Ta bort");
 		btnRemoveOrderLine.addActionListener(new ActionListener() {

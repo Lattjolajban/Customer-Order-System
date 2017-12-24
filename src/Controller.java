@@ -8,6 +8,7 @@ public class Controller {
 	Product product;
 	Customer customer;
 	Order order;
+	OrderLine orderLine;
 
 	JFrame interFace;
 
@@ -23,8 +24,9 @@ public class Controller {
 		return orders;
 	}
 
-	public void addOrder(String orderID, String deliveryDate) {
+	public void addOrder(String orderID, String deliveryDate, String customerNumber) {
 		Order order = new Order();
+		Customer customer = this.findCustomer(customerNumber);
 		order.setOrderID(orderID);
 		order.setDeliveryDate(deliveryDate);
 		customer.addOrder(order);
@@ -56,6 +58,13 @@ public class Controller {
 		orderLine.setQuantity(quantity);
 		orderLine.setProduct(product);
 		orderLine.setOrder(order);
+	}
+	public OrderLine findOrderLine (String orderLineNumber) {
+		OrderLine orderLine = order.findOrderLine(orderLineNumber);
+		if (orderLine!=null) {
+			return orderLine;
+		}
+		return null;
 	}
 	public void removeOrderLine (String orderLineNumber) {
 		order.removeOrderLine(orderLineNumber);

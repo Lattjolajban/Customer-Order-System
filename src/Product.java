@@ -42,14 +42,6 @@ public class Product {
 		unitList.add(e);
 	}
 
-	public void removeUnit(String serialNumber) {
-		for (Unit unit : unitList) {
-			if (unit.getSerialNumber().equals(serialNumber)) {
-				unitList.remove(unit);
-			}
-		}
-	}
-
 	public Unit findUnit(String serialNumber) {
 		for (Unit u : unitList) {
 			if (u.getSerialNumber().equals(serialNumber)) {
@@ -58,5 +50,11 @@ public class Product {
 		}
 	return null;
 	} 
+	public void removeUnit (String serialNumber) {
+		Unit unit = this.findUnit(serialNumber);
+		if (unit!=null) {
+			unitList.remove(unit);
+		}
+	}
 
 }
