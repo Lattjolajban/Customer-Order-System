@@ -12,10 +12,13 @@ public class Controller {
 
 	JFrame interFace;
 
-	public Controller(CustomerRegister customerRegister, ProductRegister productRegister, JFrame interFace) {
+	public Controller(CustomerRegister customerRegister, ProductRegister productRegister, JFrame interFace, Customer customer, Order order, OrderLine orderLine) {
 		this.customerRegister = customerRegister;
 		this.productRegister = productRegister;
 		this.interFace = interFace;
+		this.customer = customer;
+		this.order = order;
+		this.orderLine = orderLine;
 
 	}
 
@@ -26,19 +29,21 @@ public class Controller {
 
 	public void addOrder(String orderID, String deliveryDate, String customerNumber) {
 		Order order = new Order();
-		Customer customer = this.findCustomer(customerNumber);
+		customer = this.findCustomer(customerNumber);
+		//if (order != customer.findOrder(orderID)) {
 		order.setOrderID(orderID);
 		order.setDeliveryDate(deliveryDate);
 		customer.addOrder(order);
 		order.setCustomerOrder(customer); // Detta kanske behöver findCustomer i registret
-
-	}
+		}
+	
 
 	public Order findOrder(String orderID) {
 		Order order = customer.findOrder(orderID);
 		if (order != null) {
 			return order;
 		}
+
 		return null;
 	}
 
@@ -51,22 +56,36 @@ public class Controller {
 		return orderLines;
 	}
 
-	public void addOrderLines(String orderID, Product product, int quantity, String orderLineNumber) {
+	public void addOrderLines(String orderID, Product product, int quantity, String orderLineNumber, String productName) {
 		OrderLine orderLine = new OrderLine();
 		order = this.findOrder(orderID);
+		product = this.findProduct(productName);
 		orderLine.setNumber(orderLineNumber);
 		orderLine.setQuantity(quantity);
 		orderLine.setProduct(product);
 		orderLine.setOrder(order);
+		order.addOrderLine(orderLine);
 	}
-	public OrderLine findOrderLine (String orderLineNumber) {
+	public boolean isProductInOrderAlready (String orderID, Order order, Product product, String productName) {
+		order = this.findOrder(orderID);
+		product = this.findProduct(productName);
+		for (OrderLine orderLine : order.getLines()) {
+		if (orderLine != null && orderLine.getProduct().getName()==product.getName()) {
+			return true;
+		}
+		}
+		return false;
+	}
+
+	public OrderLine findOrderLine(String orderLineNumber) {
 		OrderLine orderLine = order.findOrderLine(orderLineNumber);
-		if (orderLine!=null) {
+		if (orderLine != null) {
 			return orderLine;
 		}
 		return null;
 	}
-	public void removeOrderLine (String orderLineNumber) {
+
+	public void removeOrderLine(String orderLineNumber) {
 		order.removeOrderLine(orderLineNumber);
 	}
 

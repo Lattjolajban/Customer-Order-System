@@ -12,31 +12,31 @@ public class CustomerRegister {
 		this.register = register;
 	}
 
-	public void addCustomer(Customer c) {
-		register.add(c);
+	public void addCustomer(Customer customer) {
+		register.add(customer);
 	}
 
-	public Customer findCustomer(String CustomerNumber) {
-		for (Customer c : register) {
-			if (c.getCustomerNumber().equals(CustomerNumber)) {
-				return c;
+	public Customer findCustomer(String customerNumber) {
+		for (Customer customer : register) {
+			if (customer.getCustomerNumber().equals(customerNumber)) {
+				return customer;
 			}
 		}
 		return null;
 	}
 
-	public void removeCustomer(String CustomerNumber) {
-		for (Customer c : register) {
-			if (c.getCustomerNumber().equals(CustomerNumber)) {
-				register.remove(c);
+	public void removeCustomer(String customerNumber) {
+		for (Customer customer : register) {
+			if (customer.getCustomerNumber().equals(customerNumber)) {
+				register.remove(customer);
 			}
 		}
 	}
 
-	public void andraCustomer(String CustomerNumber, String address, String name) {
-		Customer c = this.findCustomer(CustomerNumber);
-		c.setAddress(address);
-		c.setName(name);
+	public void andraCustomer(String customerNumber, String address, String name) {
+		Customer customer = this.findCustomer(customerNumber);
+		customer.setAddress(address);
+		customer.setName(name);
 	}
 
 }

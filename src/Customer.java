@@ -39,8 +39,8 @@ public class Customer {
 		this.orderList = orderList;
 	}
 
-	public void addOrder(Order o) {
-		orderList.add(o);
+	public void addOrder(Order order) {
+		orderList.add(order);
 	}
 
 	public void removeOrder(String orderID) {
@@ -53,9 +53,9 @@ public class Customer {
 	}
 
 	public Order findOrder(String orderID) {
-		for (Order o : orderList) {
-			if (o.getOrderID().equals(orderID)) {
-				return o;
+		for (Order order : orderList) {
+			if (order.getOrderID().equals(orderID)) {
+				return order;
 			}
 		}
 

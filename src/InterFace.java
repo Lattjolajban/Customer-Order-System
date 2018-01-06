@@ -36,6 +36,9 @@ public class InterFace {
 	private Controller controller; // Connects to the controller
 	private ProductRegister productRegister;
 	private CustomerRegister customerRegister;
+	private Customer customer;
+	private Order order;
+	private OrderLine orderLine;
 	
 
 	private JTextField textField_customerName;
@@ -81,7 +84,10 @@ public class InterFace {
 		
 		productRegister = new ProductRegister ();
 		customerRegister = new CustomerRegister();
-		controller = new Controller (customerRegister, productRegister, frame);
+		customer = new Customer();
+		order = new Order();
+		orderLine = new OrderLine();
+		controller = new Controller (customerRegister, productRegister, frame, customer, order, orderLine);
 		
 		// MENU PANEL
 		
@@ -622,14 +628,14 @@ public class InterFace {
 				}
 				else {
 					controller.addOrder(orderID, deliveryDate, customerNumber);
-					if (customer == null ) {
-						textOutput_2.append("Det finns ingen med kundnummer " + customerNumber + ".\n");
-					}
-					else {
-						textOutput_2.append("En order med id " + order.getOrderID() + " har skapats med leverans den " + order.getDeliveryDate() + " på kundnummer " + customer.getCustomerNumber() + ".\n" );
-					}
 					
-				}
+					textOutput_2.append("En order med id " + orderID + " på kundnummer " + customer.getCustomerNumber() + " har lagts till.\n" );
+					
+						//textOutput_2.append("Det finns ingen med kundnummer " + customerNumber + ".\n");
+					
+					
+					
+				} 
 				textField_customerNumber.setText("");
 				textField_deliveryDate.setText("");
 				textField_orderId.setText("");
@@ -669,16 +675,17 @@ public class InterFace {
 		textField_quantity.setBounds(115, 325, 85, 20);
 		panelCustomerOrder.add(textField_quantity);
 		textField_quantity.setColumns(10);
+		textField_quantity.setText("0");
 		
 		JButton btnAddOrderLine = new JButton("Lägg till");
 		btnAddOrderLine.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String name = textField_productName.getText();
+				String productName = textField_productName.getText();
 				int quantity = Integer.parseInt(textField_quantity.getText());
 				String orderID = textField_orderId.getText();
 				String orderLineNumber = textField_orderLineNumber.getText();
 				Order order = controller.findOrder(orderID);
-				Product product = controller.findProduct(name);
+				Product product = controller.findProduct(productName);
 				OrderLine orderLine = controller.findOrderLine(orderLineNumber);
 				
 				if (textField_productName.getText().isEmpty() || textField_quantity.getText().isEmpty() || textField_orderId.getText().isEmpty()) {
@@ -693,9 +700,12 @@ public class InterFace {
 				else if (order!=null && product != null && orderLine != null ) {
 					textOutput_2.append("Ordern har redan en sådan produkt på den angivna orderraden \n");
 				}
+				else if (controller.isProductInOrderAlready(orderID, order, product, productName)) {
+					textOutput_2.append("Produkten du försökt lägga till på en orderrad finns redan i ordern \n");
+				}
 				else {
-					controller.addOrderLines(orderID, product, quantity, orderLineNumber);
-					textOutput_2.append(orderLine.getQuantity() + " st av " + product.getName() + " har lagts till på orderrad " + orderLine.getNumber() + " i order " + order.getOrderID() +"\n" );
+					controller.addOrderLines(orderID, product, quantity, orderLineNumber, productName);
+					textOutput_2.append(quantity + " st av " + productName + " har lagts till på orderrad " + orderLineNumber + " i order " + order.getOrderID() +"\n" );
 					
 				}
 				textField_productName.setText("");
