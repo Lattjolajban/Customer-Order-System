@@ -26,10 +26,9 @@ public class CustomerRegister {
 	}
 
 	public void removeCustomer(String customerNumber) {
-		for (Customer customer : register) {
-			if (customer.getCustomerNumber().equals(customerNumber)) {
-				register.remove(customer);
-			}
+		Customer customer = this.findCustomer(customerNumber);
+		if (customer != null) {
+			register.remove(customer);
 		}
 	}
 

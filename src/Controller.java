@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.swing.JFrame;
 
@@ -9,6 +10,7 @@ public class Controller {
 	Customer customer;
 	Order order;
 	OrderLine orderLine;
+	private Random randomGenerator;
 
 	JFrame interFace;
 
@@ -47,7 +49,8 @@ public class Controller {
 		return null;
 	}
 
-	public void removeOrder(String orderID) {
+	public void removeOrder(String orderID, String customerNumber) {
+		customer = this.findCustomer(customerNumber);
 		customer.removeOrder(orderID);
 	}
 
@@ -64,7 +67,11 @@ public class Controller {
 		orderLine.setQuantity(quantity);
 		orderLine.setProduct(product);
 		orderLine.setOrder(order);
-		order.addOrderLine(orderLine);
+		if (product.getUnitList().size() >= quantity) {
+			order.addOrderLine(orderLine);
+			product.removeRandomUnit(quantity);
+			
+		}
 	}
 	public boolean isProductInOrderAlready (String orderID, Order order, Product product, String productName) {
 		order = this.findOrder(orderID);
@@ -85,7 +92,8 @@ public class Controller {
 		return null;
 	}
 
-	public void removeOrderLine(String orderLineNumber) {
+	public void removeOrderLine(String orderLineNumber, String orderID) {
+		order = this.findOrder(orderID);
 		order.removeOrderLine(orderLineNumber);
 	}
 
@@ -179,6 +187,14 @@ public class Controller {
 	public void removeUnit(String serialNumber, String name) {
 		Product product = this.findProduct(name);
 		product.removeUnit(serialNumber);
+	}
+	public Double sumOrder (String orderID) {
+		Order order = customer.findOrder(orderID);
+		if (order!=null) {
+		double sum = order.sumOrder(orderID);
+		return sum;
+		}
+		return 0.00;
 	}
 
 }

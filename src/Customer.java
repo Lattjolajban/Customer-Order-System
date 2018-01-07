@@ -43,14 +43,7 @@ public class Customer {
 		orderList.add(order);
 	}
 
-	public void removeOrder(String orderID) {
-		for (Order order : orderList) {
-			if (order.getOrderID().equals(orderID)) {
-				orderList.remove(order);
-			}
-		}
-		
-	}
+
 
 	public Order findOrder(String orderID) {
 		for (Order order : orderList) {
@@ -61,12 +54,21 @@ public class Customer {
 
 		return null;
 	}
+	
+	public void removeOrder(String orderID) {
+		Order order = this.findOrder(orderID);
+			if (order!=null) {
+				orderList.remove(order);
+			}
+		}
+		
+	
 
 	public Double summeraOrder(String orderID) {
 		double summa = 0;
-		Order o = this.findOrder(orderID);
-		for (OrderLine r : o.getLines()) {
-			summa += r.getProduct().getPrice() * r.getQuantity();
+		Order order = this.findOrder(orderID);
+		for (OrderLine orderLine : order.getLines()) {
+			summa += orderLine.getProduct().getPrice() * orderLine.getQuantity();
 
 		}
 		return summa;

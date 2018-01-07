@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class Order {
 	private String orderID;
 	private String deliveryDate;
-	private Customer CustomerOrder;
+	private Customer customerOrder;
 	private ArrayList<OrderLine> lines = new ArrayList<OrderLine>();
 
 	public String getOrderID() {
@@ -23,11 +23,11 @@ public class Order {
 	}
 
 	public Customer getCustomerOrder() {
-		return CustomerOrder;
+		return customerOrder;
 	}
 
 	public void setCustomerOrder(Customer CustomerOrder) {
-		this.CustomerOrder = CustomerOrder;
+		this.customerOrder = CustomerOrder;
 	}
 
 	public ArrayList<OrderLine> getLines() {
@@ -42,21 +42,29 @@ public class Order {
 		lines.add(r);
 	}
 
-	public void removeOrderLine(String number) {
-		for (OrderLine line : lines) {
-			if (line.getNumber().equals(number)) {
-				lines.remove(line);
-			}
-		}
-	}
-
 	public OrderLine findOrderLine(String number) {
 		for (OrderLine line : lines) {
-			if (line.getNumber().equals(number)){
+			if (line.getNumber().equals(number)) {
 				return line;
 			}
 		}
 		return null;
 	}
 
+	public void removeOrderLine(String number) {
+		OrderLine orderLine = this.findOrderLine(number);
+		if (orderLine != null) {
+			lines.remove(orderLine);
+		}
+	}
+	public Double sumOrder (String orderID) {
+		double sum = 0.00;
+		//Order order = customerOrder.findOrder(orderID);
+		for (OrderLine orderLine : lines) {
+			sum += orderLine.getProduct().getPrice() * orderLine.getQuantity();
+
+		}
+		
+		return sum;
+	}
 }

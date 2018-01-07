@@ -1,10 +1,13 @@
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Product {
 	private String name;
 	private String category;
 	private double price;
-	private ArrayList<Unit> unitList = new ArrayList <Unit>();
+	private Random randomGenerator = new Random();
+	private ProductRegister productRegister;
+	private ArrayList<Unit> unitList = new ArrayList<Unit>();
 
 	public String getName() {
 		return name;
@@ -30,16 +33,16 @@ public class Product {
 		this.price = price;
 	}
 
-	public ArrayList <Unit> getUnitList() {
+	public ArrayList<Unit> getUnitList() {
 		return unitList;
 	}
 
-	public void setUnitList(ArrayList <Unit> UnitList) {
+	public void setUnitList(ArrayList<Unit> UnitList) {
 		this.unitList = UnitList;
 	}
 
-	public void addUnit(Unit e) {
-		unitList.add(e);
+	public void addUnit(Unit unit) {
+		unitList.add(unit);
 	}
 
 	public Unit findUnit(String serialNumber) {
@@ -48,12 +51,32 @@ public class Product {
 				return u;
 			}
 		}
-	return null;
-	} 
-	public void removeUnit (String serialNumber) {
+		return null;
+	}
+
+	public void removeUnit(String serialNumber) {
 		Unit unit = this.findUnit(serialNumber);
-		if (unit!=null) {
+		if (unit != null) {
 			unitList.remove(unit);
+
+		}
+	}
+
+	public int countProductUnits() {
+		int counter = 0;
+		if (unitList.iterator().hasNext()) {
+			counter = counter + 1;
+		}
+		return counter;
+
+	}
+
+	public void removeRandomUnit(int quantity) {
+		while (quantity != 0) {
+			if (quantity <= this.countProductUnits()) {
+				this.unitList.remove(randomGenerator.nextInt(unitList.size()));
+				quantity = quantity - 1;
+			}
 		}
 	}
 
