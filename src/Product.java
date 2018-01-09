@@ -6,7 +6,6 @@ public class Product {
 	private String category;
 	private double price;
 	private Random randomGenerator = new Random();
-	private ProductRegister productRegister;
 	private ArrayList<Unit> unitList = new ArrayList<Unit>();
 
 	public String getName() {
@@ -62,22 +61,17 @@ public class Product {
 		}
 	}
 
-	public int countProductUnits() {
+	/*public int countProductUnits() {
 		int counter = 0;
 		if (unitList.iterator().hasNext()) {
 			counter = counter + 1;
 		}
 		return counter;
 
-	}
+	} */
 
-	public void removeRandomUnit(int quantity) {
-		while (quantity != 0) {
-			if (quantity <= this.countProductUnits()) {
-				this.unitList.remove(randomGenerator.nextInt(unitList.size()));
-				quantity = quantity - 1;
-			}
-		}
+	public void removeRandomUnit() {
+		this.unitList.remove(randomGenerator.nextInt(unitList.size()));
 	}
 
 }

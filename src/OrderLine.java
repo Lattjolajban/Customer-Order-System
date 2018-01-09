@@ -17,7 +17,7 @@ public class OrderLine {
 	}
 
 	public void setQuantity(int quantity) {
-		this.quantity = quantity;
+		this.quantity = this.getQuantity()+ quantity;
 	}
 
 	public void setOrder(Order order) {
@@ -36,12 +36,12 @@ public class OrderLine {
 		this.product = product;
 	}
 
-	public void MinusOnequantity(int quantity) {
-		this.quantity = quantity - 1;
+	public void MinusOnequantity() {
+		this.quantity--;
 	}
 
-	public void PlusOnequantity(int quantity) {
-		this.quantity = quantity + 1;
+	public void PlusOnequantity() {
+		this.quantity++;
 	}
 
 }

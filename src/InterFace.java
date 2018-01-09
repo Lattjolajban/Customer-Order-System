@@ -735,17 +735,22 @@ public class InterFace {
 				else if (order !=null && product==null ) {
 					textOutput_2.append("Det går inte att lägga till produkten i ordern då produkten inte finns. \n");
 				}
-				/*else if (order!=null && product != null && orderLine != null ) {
-					textOutput_2.append("Ordern har redan en sådan produkt på den angivna orderraden. \n");
-				}*/
-				else if (controller.isProductInOrderAlready(orderID, order, product, productName)) {
+				
+				else if (controller.isProductInOrderAlready(orderID, order, product, productName) && controller.isProductOnOrderLine(orderID, order, product, productName, orderLineNumber, orderLine)==false) {
 					textOutput_2.append("Produkten du försökt lägga till på en orderrad finns redan i ordern. \n");
 				}
 				else {
-					controller.addOrderLines(orderID, product, quantity, orderLineNumber, productName);
-					textOutput_2.append(quantity + " st av " + productName + " har lagts till på orderrad " + orderLineNumber + " i order " + order.getOrderID() +".\n" );
-					sum = controller.sumOrder(orderID);
-					textField_sumOrder.setText(sum.toString());
+					if (controller.enoughInStock(orderID, productName, product, quantity)==false) {
+						textOutput_2.append("Kvantiteten du har angett �verstiger lagerstatus \n");
+					}
+					else {
+						controller.addOrderLines(orderID, product, quantity, orderLineNumber, productName);
+						textOutput_2.append(quantity + " st av " + productName + " har lagts till på orderrad " + orderLineNumber + " i order " + order.getOrderID() +".\n" );
+						sum = controller.sumOrder(orderID);
+						textField_sumOrder.setText(sum.toString());
+						textOutput_2.append ("Orderraden har nu " + controller.findOrderLine(orderLineNumber).getQuantity() + " av produkten " + controller.findOrderLine(orderLineNumber).getProduct().getName() + "\n");
+					}
+					
 					
 				}
 				textField_productName.setText("");
@@ -820,7 +825,7 @@ public class InterFace {
 				Order order = controller.findOrder(orderID);
 				
 				if (textField_orderId.getText().isEmpty()) {
-					textOutput_2.append("Fyll i orderID, produktnamn och antal. \n");
+					textOutput_2.append("Fyll i orderID. \n");
 				}
 				else if (order == null) {
 					textOutput_2.append("En order med det orderID:t finns inte i systemet. \n");

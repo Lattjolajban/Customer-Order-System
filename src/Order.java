@@ -4,7 +4,7 @@ public class Order {
 	private String orderID;
 	private String deliveryDate;
 	private Customer customerOrder;
-	private ArrayList<OrderLine> lines = new ArrayList<OrderLine>();
+	private ArrayList<OrderLine> orderLines = new ArrayList<OrderLine>();
 
 	public String getOrderID() {
 		return orderID;
@@ -31,19 +31,19 @@ public class Order {
 	}
 
 	public ArrayList<OrderLine> getLines() {
-		return lines;
+		return orderLines;
 	}
 
-	public void setLines(ArrayList<OrderLine> line) {
-		this.lines = line;
+	public void setLines(ArrayList<OrderLine> orderLines) {
+		this.orderLines = orderLines;
 	}
 
-	public void addOrderLine(OrderLine r) {
-		lines.add(r);
+	public void addOrderLine(OrderLine orderLine) {
+		orderLines.add(orderLine);
 	}
 
 	public OrderLine findOrderLine(String number) {
-		for (OrderLine line : lines) {
+		for (OrderLine line : orderLines) {
 			if (line.getNumber().equals(number)) {
 				return line;
 			}
@@ -54,12 +54,12 @@ public class Order {
 	public void removeOrderLine(String number) {
 		OrderLine orderLine = this.findOrderLine(number);
 		if (orderLine != null) {
-			lines.remove(orderLine);
+			orderLines.remove(orderLine);
 		}
 	}
 	public Double sumOrder (String orderID) {
 		double sum = 0.00;
-		for (OrderLine orderLine : lines) {
+		for (OrderLine orderLine : orderLines) {
 			sum += orderLine.getProduct().getPrice() * orderLine.getQuantity();
 
 		}

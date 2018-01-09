@@ -63,15 +63,28 @@ public class Controller {
 		OrderLine orderLine = new OrderLine();
 		order = this.findOrder(orderID);
 		product = this.findProduct(productName);
+		if (product.getUnitList().size() >= quantity) {
 		orderLine.setNumber(orderLineNumber);
-		orderLine.setQuantity(quantity);
 		orderLine.setProduct(product);
 		orderLine.setOrder(order);
-		if (product.getUnitList().size() >= quantity) {
-			order.addOrderLine(orderLine);
-			product.removeRandomUnit(quantity);
+		quantity = quantity + orderLine.getQuantity();
+		orderLine.setQuantity(quantity);
+		order.addOrderLine(orderLine);
+		while (quantity !=0) {
+			product.removeRandomUnit();
+			quantity --;	
+		}
+		
 			
 		}
+	}
+	public boolean enoughInStock (String orderID, String productName, Product product, int quantity) {
+		order = this.findOrder(orderID);
+		product = this.findProduct(productName);
+		if (product.getUnitList().size()>=quantity) {
+			return true;
+		}
+		return false;
 	}
 	public boolean isProductInOrderAlready (String orderID, Order order, Product product, String productName) {
 		order = this.findOrder(orderID);
@@ -80,6 +93,15 @@ public class Controller {
 		if (orderLine != null && orderLine.getProduct().getName()==product.getName()) {
 			return true;
 		}
+		}
+		return false;
+	}
+	public boolean isProductOnOrderLine (String orderID, Order order, Product product, String productName, String orderLineNumber, OrderLine orderLine) {
+		order = this.findOrder(orderID);
+		product = this.findProduct(productName);
+		orderLine = this.findOrderLine(orderLineNumber);
+		if (orderLine.getProduct()==product) {
+			return true;
 		}
 		return false;
 	}
