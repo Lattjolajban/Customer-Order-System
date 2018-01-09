@@ -64,7 +64,7 @@ public class TestMethod {
 
 		cReg.addCustomer(customer1);
 
-		System.out.println(customer1.summeraOrder("order1"));
+		//System.out.println(customer1.summeraOrder("order1"));
 		line1.PlusOnequantity(3);
 		
 		System.out.println ("Hello World!");

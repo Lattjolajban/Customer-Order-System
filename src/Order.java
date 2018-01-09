@@ -59,7 +59,6 @@ public class Order {
 	}
 	public Double sumOrder (String orderID) {
 		double sum = 0.00;
-		//Order order = customerOrder.findOrder(orderID);
 		for (OrderLine orderLine : lines) {
 			sum += orderLine.getProduct().getPrice() * orderLine.getQuantity();
 

@@ -64,7 +64,7 @@ public class Customer {
 		
 	
 
-	public Double summeraOrder(String orderID) {
+	/* public Double summeraOrder(String orderID) {
 		double summa = 0;
 		Order order = this.findOrder(orderID);
 		for (OrderLine orderLine : order.getLines()) {
@@ -72,6 +72,6 @@ public class Customer {
 
 		}
 		return summa;
-	}
+	} */
 
 }
