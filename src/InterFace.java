@@ -18,6 +18,7 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 import java.awt.Component;
+import java.awt.Font;
 
 public class InterFace {
 
@@ -36,9 +37,6 @@ public class InterFace {
 	private Controller controller; // Connects to the controller
 	private ProductRegister productRegister;
 	private CustomerRegister customerRegister;
-	private Customer customer;
-	private Order order;
-	private OrderLine orderLine;
 	
 
 	private JTextField textField_customerName;
@@ -85,10 +83,7 @@ public class InterFace {
 		
 		productRegister = new ProductRegister ();
 		customerRegister = new CustomerRegister();
-		customer = new Customer();
-		order = new Order();
-		orderLine = new OrderLine();
-		controller = new Controller (customerRegister, productRegister, frame, customer, order, orderLine);
+		controller = new Controller (customerRegister, productRegister, frame);
 		
 		// MENU PANEL
 		
@@ -456,29 +451,29 @@ public class InterFace {
 		panelCustomerOrder.add(lblCustomer);
 		
 		JLabel lblCustomerName = new JLabel("Namn:");
-		lblCustomerName.setBounds(25, 30, 46, 15);
+		lblCustomerName.setBounds(25, 30, 63, 15);
 		panelCustomerOrder.add(lblCustomerName);
 		
 		JLabel lblAddress = new JLabel("Adress: ");
-		lblAddress.setBounds(25, 55, 46, 14);
+		lblAddress.setBounds(25, 55, 63, 14);
 		panelCustomerOrder.add(lblAddress);
 		
 		JLabel lblCustomerNumber = new JLabel("Kundnummer:");
-		lblCustomerNumber.setBounds(25, 80, 74, 14);
+		lblCustomerNumber.setBounds(25, 80, 80, 14);
 		panelCustomerOrder.add(lblCustomerNumber);
 		
 		textField_customerName = new JTextField();
-		textField_customerName.setBounds(115, 30, 85, 20);
+		textField_customerName.setBounds(130, 30, 85, 20);
 		panelCustomerOrder.add(textField_customerName);
 		textField_customerName.setColumns(10);
 		
 		textField_address = new JTextField();
-		textField_address.setBounds(115, 55, 85, 20);
+		textField_address.setBounds(130, 55, 85, 20);
 		panelCustomerOrder.add(textField_address);
 		textField_address.setColumns(10);
 		
 		textField_customerNumber = new JTextField();
-		textField_customerNumber.setBounds(115, 80, 85, 20);
+		textField_customerNumber.setBounds(130, 80, 85, 20);
 		panelCustomerOrder.add(textField_customerNumber);
 		textField_customerNumber.setColumns(10);
 		
@@ -491,11 +486,12 @@ public class InterFace {
 		panelCustomerOrder.add(lblOrder);
 		
 		JLabel lblOrderId = new JLabel("OrderID:");
-		lblOrderId.setBounds(27, 189, 46, 14);
+		lblOrderId.setBounds(27, 189, 78, 14);
 		panelCustomerOrder.add(lblOrderId);
 		
 		JLabel lblDeliveryDate = new JLabel("Leveransdatum:");
-		lblDeliveryDate.setBounds(27, 214, 89, 14);
+		lblDeliveryDate.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblDeliveryDate.setBounds(27, 214, 114, 14);
 		panelCustomerOrder.add(lblDeliveryDate);
 		
 		JButton btnAddCustomer = new JButton("Skapa");
@@ -556,7 +552,7 @@ public class InterFace {
 			
 			}
 			});
-		btnSearchCustomer.setBounds(115, 105, 85, 23);
+		btnSearchCustomer.setBounds(130, 105, 85, 23);
 		panelCustomerOrder.add(btnSearchCustomer);
 		
 		JButton btnChangeCustomer = new JButton("Ändra");
@@ -611,16 +607,16 @@ public class InterFace {
 				
 			}
 			});
-		btnRemoveCustomer.setBounds(115, 130, 85, 23);
+		btnRemoveCustomer.setBounds(130, 130, 85, 23);
 		panelCustomerOrder.add(btnRemoveCustomer);
 		
 		textField_orderId = new JTextField();
-		textField_orderId.setBounds(115, 185, 85, 20);
+		textField_orderId.setBounds(130, 185, 85, 20);
 		panelCustomerOrder.add(textField_orderId);
 		textField_orderId.setColumns(10);
 		
 		textField_deliveryDate = new JTextField();
-		textField_deliveryDate.setBounds(115, 210, 85, 20);
+		textField_deliveryDate.setBounds(130, 210, 85, 20);
 		panelCustomerOrder.add(textField_deliveryDate);
 		textField_deliveryDate.setColumns(10);
 		
@@ -688,7 +684,7 @@ public class InterFace {
 				
 			}
 			});
-		btnRemoveOrder.setBounds(115, 240, 85, 23);
+		btnRemoveOrder.setBounds(130, 240, 85, 23);
 		panelCustomerOrder.add(btnRemoveOrder);
 		
 		JLabel lblOrderLine = new JLabel("Orderrad");
@@ -696,20 +692,20 @@ public class InterFace {
 		panelCustomerOrder.add(lblOrderLine);
 		
 		JLabel lblProduct2 = new JLabel("Produkt:");
-		lblProduct2.setBounds(27, 300, 46, 14);
+		lblProduct2.setBounds(27, 300, 78, 14);
 		panelCustomerOrder.add(lblProduct2);
 		
 		JLabel lblQuantity = new JLabel("Antal:");
-		lblQuantity.setBounds(27, 325, 46, 14);
+		lblQuantity.setBounds(27, 325, 61, 14);
 		panelCustomerOrder.add(lblQuantity);
 		
 		textField_productName = new JTextField();
-		textField_productName.setBounds(115, 300, 85, 20);
+		textField_productName.setBounds(130, 300, 85, 20);
 		panelCustomerOrder.add(textField_productName);
 		textField_productName.setColumns(10);
 		
 		textField_quantity = new JTextField();
-		textField_quantity.setBounds(115, 325, 85, 20);
+		textField_quantity.setBounds(130, 325, 85, 20);
 		panelCustomerOrder.add(textField_quantity);
 		textField_quantity.setColumns(10);
 		textField_quantity.setText("0");
@@ -717,14 +713,14 @@ public class InterFace {
 		JButton btnAddOrderLine = new JButton("Lägg till");
 		btnAddOrderLine.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Double sum = 0.00;
+				double sum = 0.00;
 				String productName = textField_productName.getText();
 				int quantity = Integer.parseInt(textField_quantity.getText());
 				String orderID = textField_orderId.getText();
 				String orderLineNumber = textField_orderLineNumber.getText();
 				Order order = controller.findOrder(orderID);
 				Product product = controller.findProduct(productName);
-				OrderLine orderLine = controller.findOrderLine(orderLineNumber);
+				
 				
 				if (textField_productName.getText().isEmpty() || textField_quantity.getText().isEmpty() || textField_orderId.getText().isEmpty()) {
 					textOutput_2.append("Fyll i orderID, produktnamn och antal. \n");
@@ -736,15 +732,15 @@ public class InterFace {
 					textOutput_2.append("Det går inte att lägga till produkten i ordern då produkten inte finns. \n");
 				}
 				
-				else if (controller.isProductInOrderAlready(orderID, order, product, productName) && controller.isProductOnOrderLine(orderID, order, product, productName, orderLineNumber, orderLine)==false) {
+				else if (controller.isProductInOrderAlready(orderID, productName) && controller.isProductOnOrderLine(orderID, productName, orderLineNumber)==false) {
 					textOutput_2.append("Produkten du försökt lägga till på en orderrad finns redan i ordern. \n");
 				}
 				else {
-					if (controller.enoughInStock(orderID, productName, product, quantity)==false) {
-						textOutput_2.append("Kvantiteten du har angett �verstiger lagerstatus \n");
+					if (controller.enoughInStock(orderID, productName, quantity)==false) {
+						textOutput_2.append("Kvantiteten du har angett �verstiger lagerstatus \n");
 					}
 					else {
-						controller.addOrderLines(orderID, product, quantity, orderLineNumber, productName);
+						controller.addOrderLines(orderID, quantity, orderLineNumber, productName);
 						textOutput_2.append(quantity + " st av " + productName + " har lagts till på orderrad " + orderLineNumber + " i order " + order.getOrderID() +".\n" );
 						//sum = controller.sumOrder(orderID);
 						//textField_sumOrder.setText(sum.toString());
@@ -763,11 +759,12 @@ public class InterFace {
 		panelCustomerOrder.add(btnAddOrderLine);
 		
 		JLabel lblOrderLineNumber = new JLabel("Orderradnummer: ");
-		lblOrderLineNumber.setBounds(25, 385, 89, 14);
+		lblOrderLineNumber.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblOrderLineNumber.setBounds(25, 385, 116, 14);
 		panelCustomerOrder.add(lblOrderLineNumber);
 		
 		textField_orderLineNumber = new JTextField();
-		textField_orderLineNumber.setBounds(115, 383, 85, 20);
+		textField_orderLineNumber.setBounds(130, 383, 85, 20);
 		panelCustomerOrder.add(textField_orderLineNumber);
 		textField_orderLineNumber.setColumns(10);
 		

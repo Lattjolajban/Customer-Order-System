@@ -10,17 +10,16 @@ public class Controller {
 	Customer customer;
 	Order order;
 	OrderLine orderLine;
+	Unit unit;
 	private Random randomGenerator;
 
 	JFrame interFace;
 
-	public Controller(CustomerRegister customerRegister, ProductRegister productRegister, JFrame interFace, Customer customer, Order order, OrderLine orderLine) {
+	public Controller(CustomerRegister customerRegister, ProductRegister productRegister, JFrame interFace ) {
 		this.customerRegister = customerRegister;
 		this.productRegister = productRegister;
 		this.interFace = interFace;
-		this.customer = customer;
-		this.order = order;
-		this.orderLine = orderLine;
+		
 
 	}
 
@@ -30,7 +29,7 @@ public class Controller {
 	}
 
 	public void addOrder(String orderID, String deliveryDate, String customerNumber) {
-		Order order = new Order();
+		order = new Order();
 		customer = this.findCustomer(customerNumber);
 		//if (order != customer.findOrder(orderID)) {
 		order.setOrderID(orderID);
@@ -41,7 +40,7 @@ public class Controller {
 	
 
 	public Order findOrder(String orderID) {
-		Order order = customer.findOrder(orderID);
+		order = customer.findOrder(orderID);
 		if (order != null) {
 			return order;
 		}
@@ -59,8 +58,8 @@ public class Controller {
 		return orderLines;
 	}
 
-	public void addOrderLines(String orderID, Product product, int quantity, String orderLineNumber, String productName) {
-		OrderLine orderLine = order.findOrderLine(orderLineNumber);
+	public void addOrderLines(String orderID, int quantity, String orderLineNumber, String productName) {
+		orderLine = order.findOrderLine(orderLineNumber);
 		if (orderLine==null) {
 			orderLine = new OrderLine();
 		}
@@ -80,7 +79,7 @@ public class Controller {
 			
 		}
 	}
-	public boolean enoughInStock (String orderID, String productName, Product product, int quantity) {
+	public boolean enoughInStock (String orderID, String productName, int quantity) {
 		order = this.findOrder(orderID);
 		product = this.findProduct(productName);
 		if (product.getUnitList().size()>=quantity) {
@@ -88,9 +87,9 @@ public class Controller {
 		}
 		return false;
 	}
-	public boolean isProductInOrderAlready (String orderID, Order order, Product product, String productName) {
-		order = this.findOrder(orderID);
-		product = this.findProduct(productName);
+	public boolean isProductInOrderAlready (String orderID, String productName) {
+		this.order = this.findOrder(orderID);
+		this.product = this.findProduct(productName);
 		for (OrderLine orderLine : order.getLines()) {
 		if (orderLine != null && orderLine.getProduct().getName()==product.getName()) {
 			return true;
@@ -98,7 +97,7 @@ public class Controller {
 		}
 		return false;
 	}
-	public boolean isProductOnOrderLine (String orderID, Order order, Product product, String productName, String orderLineNumber, OrderLine orderLine) {
+	public boolean isProductOnOrderLine (String orderID, String productName, String orderLineNumber) {
 		order = this.findOrder(orderID);
 		product = this.findProduct(productName);
 		orderLine = this.findOrderLine(orderLineNumber);
@@ -109,7 +108,7 @@ public class Controller {
 	}
 
 	public OrderLine findOrderLine(String orderLineNumber) {
-		OrderLine orderLine = order.findOrderLine(orderLineNumber);
+		orderLine = order.findOrderLine(orderLineNumber);
 		if (orderLine != null) {
 			return orderLine;
 		}
@@ -127,7 +126,7 @@ public class Controller {
 	}
 
 	public void addCustomer(String name, String address, String customerNumber) {
-		Customer customer = new Customer();
+		customer = new Customer();
 		customer.setName(name);
 		customer.setAddress(address);
 		customer.setCustomerNumber(customerNumber);
@@ -136,7 +135,7 @@ public class Controller {
 	}
 
 	public Customer findCustomer(String customerNumber) {
-		Customer customer = customerRegister.findCustomer(customerNumber);
+		customer = customerRegister.findCustomer(customerNumber);
 		if (customer != null) {
 			return customer;
 		}
@@ -148,7 +147,7 @@ public class Controller {
 	}
 
 	public void changeCustomer(String name, String address, String customerNumber) {
-		Customer customer = this.findCustomer(customerNumber);
+		customer = this.findCustomer(customerNumber);
 		customer.setAddress(address);
 		customer.setName(name);
 	}
@@ -159,7 +158,7 @@ public class Controller {
 	}
 
 	public void addProduct(String name, String category, double price) {
-		Product product = new Product();
+		product = new Product();
 		product.setCategory(category);
 		product.setName(name);
 		product.setPrice(price);
@@ -167,7 +166,7 @@ public class Controller {
 	}
 
 	public Product findProduct(String name) {
-		Product product = productRegister.findProduct(name);
+		product = productRegister.findProduct(name);
 		if (product != null) {
 			return product;
 		}
@@ -180,7 +179,7 @@ public class Controller {
 	}
 
 	public void changeProduct(String name, String category, double price) {
-		Product product = this.findProduct(name);
+		product = this.findProduct(name);
 		product.setCategory(category);
 		product.setPrice(price);
 
@@ -192,28 +191,28 @@ public class Controller {
 	}
 
 	public void addUnit(String serialNumber, String name) {
-		Unit unit = new Unit();
+		product = this.findProduct(name);
+		unit = new Unit();
 		unit.setSerialNumber(serialNumber);
-		Product product = this.findProduct(name);
 		product.addUnit(unit);
 
 	}
 
 	public Unit findUnit(String serialNumber, String name) {
-		Product p = this.findProduct(name);
-		if (p != null) {
-			return p.findUnit(serialNumber);
+		product = this.findProduct(name);
+		if (product != null) {
+			return product.findUnit(serialNumber);
 		}
 		return null;
 
 	}
 
 	public void removeUnit(String serialNumber, String name) {
-		Product product = this.findProduct(name);
+		product = this.findProduct(name);
 		product.removeUnit(serialNumber);
 	}
 	public double sumOrder (String orderID) {
-		Order order = customer.findOrder(orderID);
+		order = customer.findOrder(orderID);
 		double totalSum = 0.00;
 		if (order!=null) {
 		for (OrderLine orderLine : order.getLines()) {

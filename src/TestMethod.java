@@ -9,12 +9,12 @@ public class TestMethod {
 		Order order1 = new Order();
 		Customer customer1 = new Customer();
 
-		p1.setName("Pågatåg");
+		p1.setName("Pï¿½gatï¿½g");
 		p1.setPrice(2000);
-		p1.setCategory("Tåg");
+		p1.setCategory("Tï¿½g");
 
 		Product p2 = new Product();
-		p2.setName("Pågatåg vagn");
+		p2.setName("Pï¿½gatï¿½g vagn");
 		p2.setPrice(500);
 		p2.setCategory("Vagnar");
 
@@ -52,7 +52,7 @@ public class TestMethod {
 		line2.setOrder(order1);
 
 		order1.setOrderID("order1");
-		order1.setDeliveryDate("Röv");
+		order1.setDeliveryDate("Rï¿½v");
 		order1.addOrderLine(line1);
 		order1.addOrderLine(line2);
 		order1.setCustomerOrder(customer1);
@@ -65,7 +65,7 @@ public class TestMethod {
 		cReg.addCustomer(customer1);
 
 		//System.out.println(customer1.summeraOrder("order1"));
-		line1.PlusOnequantity(3);
+		//line1.PlusOnequantity(3);
 		
 		System.out.println ("Hello World!");
 		
