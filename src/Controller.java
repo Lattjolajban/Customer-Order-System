@@ -60,15 +60,17 @@ public class Controller {
 	}
 
 	public void addOrderLines(String orderID, Product product, int quantity, String orderLineNumber, String productName) {
-		OrderLine orderLine = new OrderLine();
+		OrderLine orderLine = order.findOrderLine(orderLineNumber);
+		if (orderLine==null) {
+			orderLine = new OrderLine();
+		}
 		order = this.findOrder(orderID);
 		product = this.findProduct(productName);
 		if (product.getUnitList().size() >= quantity) {
 		orderLine.setNumber(orderLineNumber);
 		orderLine.setProduct(product);
 		orderLine.setOrder(order);
-		quantity = quantity + orderLine.getQuantity();
-		orderLine.setQuantity(quantity);
+		orderLine.setQuantity(orderLine.getQuantity() +quantity);
 		order.addOrderLine(orderLine);
 		while (quantity !=0) {
 			product.removeRandomUnit();
@@ -210,11 +212,16 @@ public class Controller {
 		Product product = this.findProduct(name);
 		product.removeUnit(serialNumber);
 	}
-	public Double sumOrder (String orderID) {
+	public double sumOrder (String orderID) {
 		Order order = customer.findOrder(orderID);
+		double totalSum = 0.00;
 		if (order!=null) {
-		double sum = order.sumOrder(orderID);
-		return sum;
+		for (OrderLine orderLine : order.getLines()) {
+			double orderLineSum = 0.00; 
+			orderLineSum = orderLine.getProduct().getPrice() * orderLine.getQuantity();
+			totalSum += orderLineSum;
+		}
+		return totalSum;
 		}
 		return 0.00;
 	}

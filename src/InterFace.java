@@ -746,8 +746,8 @@ public class InterFace {
 					else {
 						controller.addOrderLines(orderID, product, quantity, orderLineNumber, productName);
 						textOutput_2.append(quantity + " st av " + productName + " har lagts till på orderrad " + orderLineNumber + " i order " + order.getOrderID() +".\n" );
-						sum = controller.sumOrder(orderID);
-						textField_sumOrder.setText(sum.toString());
+						//sum = controller.sumOrder(orderID);
+						//textField_sumOrder.setText(sum.toString());
 						textOutput_2.append ("Orderraden har nu " + controller.findOrderLine(orderLineNumber).getQuantity() + " av produkten " + controller.findOrderLine(orderLineNumber).getProduct().getName() + "\n");
 					}
 					
@@ -820,7 +820,7 @@ public class InterFace {
 		JButton btnVisaOrdersumma = new JButton("Visa ordersumma");
 		btnVisaOrdersumma.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Double sum = 0.00;
+				double sum = 0.00;
 				String orderID = textField_orderId.getText();
 				Order order = controller.findOrder(orderID);
 				
@@ -832,7 +832,7 @@ public class InterFace {
 				}
 				else {
 					sum = controller.sumOrder(orderID);
-					textField_sumOrder.setText(sum.toString());
+					textField_sumOrder.setText(String.valueOf(sum));
 				}
 				textField_orderId.setText("");
 			}

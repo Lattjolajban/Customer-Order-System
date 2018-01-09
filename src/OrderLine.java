@@ -17,7 +17,7 @@ public class OrderLine {
 	}
 
 	public void setQuantity(int quantity) {
-		this.quantity = this.getQuantity()+ quantity;
+		this.quantity = quantity;
 	}
 
 	public void setOrder(Order order) {
