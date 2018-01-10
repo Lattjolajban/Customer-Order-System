@@ -57,12 +57,12 @@ public class Order {
 			orderLines.remove(orderLine);
 		}
 	}
-	/* public double sumOrder (String orderID) {
+	 public double sumOrder (String orderID) {
 		double sum = 0.00;
 		for (OrderLine orderLine : orderLines) {
 			sum =+ orderLine.getProduct().getPrice() * orderLine.getQuantity();
 			
 		}
 		return sum;
-	} */
+	} 
 }

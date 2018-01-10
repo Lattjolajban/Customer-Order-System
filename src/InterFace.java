@@ -744,7 +744,7 @@ public class InterFace {
 						textOutput_2.append(quantity + " st av " + productName + " har lagts till på orderrad " + orderLineNumber + " i order " + order.getOrderID() +".\n" );
 						//sum = controller.sumOrder(orderID);
 						//textField_sumOrder.setText(sum.toString());
-						textOutput_2.append ("Orderraden har nu " + controller.findOrderLine(orderLineNumber).getQuantity() + " av produkten " + controller.findOrderLine(orderLineNumber).getProduct().getName() + "\n");
+						textOutput_2.append ("Orderraden har nu " + controller.findOrderLine(orderLineNumber, orderID).getQuantity() + " av produkten " + controller.findOrderLine(orderLineNumber, orderID).getProduct().getName() + "\n");
 					}
 					
 					
@@ -774,7 +774,7 @@ public class InterFace {
 				String orderID = textField_orderId.getText();
 				String orderLineNumber = textField_orderLineNumber.getText();
 				Order order = controller.findOrder(orderID);
-				OrderLine orderLine = controller.findOrderLine(orderLineNumber);
+				OrderLine orderLine = controller.findOrderLine(orderLineNumber, orderID);
 				
 				if (textField_orderLineNumber.getText().isEmpty() || textField_orderId.getText().isEmpty()) {
 					textOutput_2.append("Fyll i orderID och orderradnummer. \n");

@@ -17,7 +17,7 @@ public class OrderLine {
 	}
 
 	public void setQuantity(int quantity) {
-		this.quantity = quantity;
+		this.quantity = this.getQuantity() + quantity;
 	}
 
 	public void setOrder(Order order) {
@@ -42,6 +42,11 @@ public class OrderLine {
 
 	public void PlusOnequantity() {
 		this.quantity++;
+	}
+	public double getTotalPrice () {
+		double totalSum = 0;
+		totalSum = (this.getProduct().getPrice()*this.getQuantity());
+		return totalSum;
 	}
 
 }

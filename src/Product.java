@@ -45,9 +45,9 @@ public class Product {
 	}
 
 	public Unit findUnit(String serialNumber) {
-		for (Unit u : unitList) {
-			if (u.getSerialNumber().equals(serialNumber)) {
-				return u;
+		for (Unit unit : unitList) {
+			if (unit.getSerialNumber().equals(serialNumber)) {
+				return unit;
 			}
 		}
 		return null;
@@ -69,9 +69,14 @@ public class Product {
 		return counter;
 
 	} */
+	public Unit getRandomUnit () {
+		Unit unit = unitList.get(randomGenerator.nextInt(unitList.size()));
+		return unit;
+	}
 
 	public void removeRandomUnit() {
-		this.unitList.remove(randomGenerator.nextInt(unitList.size()));
+		//unitList.remove(randomGenerator.nextInt(unitList.size()));
+		unitList.remove(this.getRandomUnit());
 	}
 
 }
