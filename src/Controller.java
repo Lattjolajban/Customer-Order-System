@@ -12,7 +12,7 @@ public class Controller {
 	OrderLine orderLine;
 	Unit unit;
 
-	private ArrayList<Unit> tempOrderUnits = new ArrayList<Unit>();
+	private ArrayList<Unit> tempOrderUnits = new ArrayList<Unit>(); // Is not used. future function
 
 	JFrame interFace;
 

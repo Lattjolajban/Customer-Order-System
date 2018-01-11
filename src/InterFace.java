@@ -89,6 +89,7 @@ public class InterFace {
 		panelMenu.setVisible(true);
 		
 		JButton btnCustomerOrderButton = new JButton("Kund & Order");
+		btnCustomerOrderButton.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		btnCustomerOrderButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				panelCustomerOrder.show();
@@ -99,6 +100,7 @@ public class InterFace {
 		panelMenu.add(btnCustomerOrderButton);
 		
 		JButton btnProductUnitButton = new JButton("Produkt & Exemplar");
+		btnProductUnitButton.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		btnProductUnitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				panelProductUnit.show();
@@ -453,7 +455,7 @@ public class InterFace {
 		panelCustomerOrder.add(lblAddress);
 		
 		JLabel lblCustomerNumber = new JLabel("Kundnummer:");
-		lblCustomerNumber.setBounds(25, 80, 80, 14);
+		lblCustomerNumber.setBounds(25, 80, 95, 14);
 		panelCustomerOrder.add(lblCustomerNumber);
 		
 		textField_customerName = new JTextField();
