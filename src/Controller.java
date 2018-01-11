@@ -11,8 +11,8 @@ public class Controller {
 	Order order;
 	OrderLine orderLine;
 	Unit unit;
-	
-	private ArrayList <Unit> tempOrderUnits = new ArrayList <Unit>();
+
+	private ArrayList<Unit> tempOrderUnits = new ArrayList<Unit>();
 
 	JFrame interFace;
 
@@ -60,23 +60,29 @@ public class Controller {
 	public void addOrderLines(String orderID, int quantity, String orderLineNumber, String productName) {
 		order = this.findOrder(orderID);
 		product = this.findProduct(productName);
-		unit = product.getRandomUnit();
 		orderLine = this.findOrderLine(orderLineNumber, orderID);
-		if (orderLine == null) {
+		if (orderLine == null || orderLine.getProduct() != product) {
 			orderLine = new OrderLine();
-		}
-		if (product.getUnitList().size() >= quantity) {
-			tempOrderUnits.add(unit);
-			orderLine.setNumber(orderLineNumber);
-			orderLine.setProduct(product);
-			orderLine.setOrder(order);
-			orderLine.setQuantity(quantity);
-			order.addOrderLine(orderLine);
-			while (quantity != 0) {
-				product.removeUnit(unit.getSerialNumber());
-				quantity--;
+			if (product.getUnitList().size() >= quantity) {
+				orderLine.setNumber(orderLineNumber);
+				orderLine.setProduct(product);
+				orderLine.setOrder(order);
+				orderLine.setQuantity(quantity);
+				order.addOrderLine(orderLine);
+				
+			}
+		} else {
+			if (product.getUnitList().size() >= quantity) {
+				orderLine.setQuantity(orderLine.getQuantity() + quantity);
+				
 			}
 
+		}
+		while (quantity != 0) {
+			unit = product.getRandomUnit();
+			tempOrderUnits.add(unit);
+			product.removeUnit(unit.getSerialNumber());
+			quantity--;
 		}
 
 	}
@@ -223,11 +229,11 @@ public class Controller {
 		order = this.findOrder(orderID);
 		for (OrderLine orderLine : order.getLines()) {
 			if (orderLine != null) {
-			totalPrice += orderLine.getTotalPrice();
-		}
+				totalPrice += orderLine.getTotalPrice();
+			}
 		}
 		return totalPrice;
-		
+
 	}
 
 }
