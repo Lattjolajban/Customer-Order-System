@@ -260,7 +260,7 @@ public class InterFace {
 		separator.setBounds(10, 200, 238, 2);
 		
 		JLabel lblUnit = new JLabel("Exemplar");
-		lblUnit.setBounds(95, 215, 46, 14);
+		lblUnit.setBounds(95, 215, 70, 14);
 		
 		JLabel lblSerialNumber = new JLabel("Serienummer:");
 		lblSerialNumber.setBounds(25, 240, 105, 14);
@@ -698,7 +698,7 @@ public class InterFace {
 		panelCustomerOrder.add(btnRemoveOrder);
 		
 		JLabel lblOrderLine = new JLabel("Orderrad");
-		lblOrderLine.setBounds(94, 280, 46, 14);
+		lblOrderLine.setBounds(94, 280, 71, 14);
 		panelCustomerOrder.add(lblOrderLine);
 		
 		JLabel lblProduct2 = new JLabel("Produkt:");
