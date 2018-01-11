@@ -43,9 +43,9 @@ public class Order {
 	}
 
 	public OrderLine findOrderLine(String number) {
-		for (OrderLine line : orderLines) {
-			if (line.getNumber().equals(number)) {
-				return line;
+		for (OrderLine orderLine : orderLines) {
+			if (orderLine.getNumber().equals(number)) {
+				return orderLine;
 			}
 		}
 		return null;

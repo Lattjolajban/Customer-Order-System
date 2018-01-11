@@ -23,20 +23,14 @@ public class Controller {
 
 	}
 
-	public ArrayList<Order> getArrayListOrders() {
-		ArrayList<Order> orders = customer.getOrderList();
-		return orders;
-	}
-
 	public void addOrder(String orderID, String deliveryDate, String customerNumber) {
 		if (this.IsOrderIDTaken(orderID)==false) {
 		order = new Order();
 		customer = this.findCustomer(customerNumber);
-		// if (order != customer.findOrder(orderID)) {
 		order.setOrderID(orderID);
 		order.setDeliveryDate(deliveryDate);
 		customer.addOrder(order);
-		order.setCustomerOrder(customer); // Detta kanske behöver findCustomer i registret
+		order.setCustomerOrder(customer);
 		}
 	}
 
@@ -257,9 +251,11 @@ public class Controller {
 		
 	}
 	public Order findOrder(String orderID) {
-		order = customer.findOrder(orderID);
-		if (order != null) {
-			return order;
+		for (Customer customer : customerRegister.getRegister()) {
+			order = customer.findOrder(orderID);
+			if (order != null) {
+				return order;
+			}
 		}
 
 		return null;

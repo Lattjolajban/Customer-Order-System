@@ -235,6 +235,9 @@ public class InterFace {
 				if(textField_name.getText().isEmpty() || textField_category.getText().isEmpty() || textField_price.getText().isEmpty()) {
 					textOutput.append("Fyll i samtliga produktfÃ¤lt. \n");
 					}
+				else if (product==null) {
+					textOutput.append("Produkten du försöker ändra finns inte. \n");
+				}
 				else {
 					String tempCategory = product.getCategory();
 					Double tempPrice = product.getPrice();
@@ -776,7 +779,7 @@ public class InterFace {
 				String orderID = textField_orderId.getText();
 				String orderLineNumber = textField_orderLineNumber.getText();
 				Order order = controller.findOrder(orderID);
-				OrderLine orderLine = controller.findOrderLine(orderLineNumber, orderID);
+				//OrderLine orderLine = controller.findOrderLine(orderLineNumber, orderID);
 				
 				if (textField_orderLineNumber.getText().isEmpty() || textField_orderId.getText().isEmpty()) {
 					textOutput_2.append("Fyll i orderID och orderradnummer. \n");
@@ -784,7 +787,7 @@ public class InterFace {
 				else if (order == null) {
 					textOutput_2.append("En order med det orderID:t finns inte i systemet. \n");
 				}
-				else if (order!=null && orderLine==null) {
+				else if (order!=null && controller.findOrderLine(orderLineNumber, orderID)==null) {
 					textOutput_2.append ("Ordern har inte den angivna orderraden. \n");
 				}
 				else {
