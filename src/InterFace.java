@@ -124,7 +124,7 @@ public class InterFace {
 		lblName.setBounds(25, 30, 55, 14);
 		
 		JLabel lblCategory = new JLabel("Kategori:");
-		lblCategory.setBounds(25, 55, 55, 14);
+		lblCategory.setBounds(25, 55, 80, 14);
 		
 		JLabel lblPrice = new JLabel("Pris:");
 		lblPrice.setBounds(25, 80, 55, 14);
@@ -263,7 +263,7 @@ public class InterFace {
 		lblUnit.setBounds(95, 215, 46, 14);
 		
 		JLabel lblSerialNumber = new JLabel("Serienummer:");
-		lblSerialNumber.setBounds(25, 240, 85, 14);
+		lblSerialNumber.setBounds(25, 240, 105, 14);
 		
 		textField_serialNumber = new JTextField();
 		textField_serialNumber.setBounds(115, 237, 85, 20);
@@ -365,7 +365,7 @@ public class InterFace {
 		textOutput.setColumns(10);
 		textOutput.setLineWrap(true);
 		textOutput.setWrapStyleWord(true);
-		textOutput.setBounds(0, 71, 191, 223);
+		textOutput.setBounds(1, 1, 223, 221);
 		textOutput.setEditable(false);
 		panelProductUnit.add(textOutput);
 		
