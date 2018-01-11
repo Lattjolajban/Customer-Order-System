@@ -1,15 +1,15 @@
 public class OrderLine {
-	private String number;
+	private String orderLineNumber;
 	private int quantity;
 	private Order order;
 	private Product product;
 
 	public String getNumber() {
-		return number;
+		return orderLineNumber;
 	}
 
-	public void setNumber(String number) {
-		this.number = number;
+	public void setNumber(String orderLineNumber) {
+		this.orderLineNumber= orderLineNumber;
 	}
 
 	public int getQuantity() {

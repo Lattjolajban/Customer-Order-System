@@ -2,22 +2,22 @@
 import java.util.ArrayList;
 
 public class CustomerRegister {
-	private ArrayList<Customer> register = new ArrayList<Customer>();
+	private ArrayList<Customer> customerRegister = new ArrayList<Customer>();
 
-	public ArrayList<Customer> getRegister() {
-		return register;
+	public ArrayList<Customer> getCustomerRegister() {
+		return customerRegister;
 	}
 
-	public void setRegister(ArrayList<Customer> register) {
-		this.register = register;
+	public void setCustomerRegister(ArrayList<Customer> register) {
+		this.customerRegister = register;
 	}
 
 	public void addCustomer(Customer customer) {
-		register.add(customer);
+		customerRegister.add(customer);
 	}
 
 	public Customer findCustomer(String customerNumber) {
-		for (Customer customer : register) {
+		for (Customer customer : customerRegister) {
 			if (customer.getCustomerNumber().equals(customerNumber)) {
 				return customer;
 			}
@@ -28,14 +28,14 @@ public class CustomerRegister {
 	public void removeCustomer(String customerNumber) {
 		Customer customer = this.findCustomer(customerNumber);
 		if (customer != null) {
-			register.remove(customer);
+			customerRegister.remove(customer);
 		}
 	}
 
-	public void andraCustomer(String customerNumber, String address, String name) {
+	public void andraCustomer(String customerNumber, String customerAddress, String customerName) {
 		Customer customer = this.findCustomer(customerNumber);
-		customer.setAddress(address);
-		customer.setName(name);
+		customer.setCustomerAddress(customerAddress);
+		customer.setCustomerName(customerName);
 	}
 
 }

@@ -122,14 +122,14 @@ public class Controller {
 	}
 
 	public ArrayList<Customer> getArrayListCustomers() {
-		ArrayList<Customer> customers = customerRegister.getRegister();
+		ArrayList<Customer> customers = customerRegister.getCustomerRegister();
 		return customers;
 	}
 
-	public void addCustomer(String name, String address, String customerNumber) {
+	public void addCustomer(String customerName, String customerAddress, String customerNumber) {
 		customer = new Customer();
-		customer.setName(name);
-		customer.setAddress(address);
+		customer.setCustomerName(customerName);
+		customer.setCustomerAddress(customerAddress);
 		customer.setCustomerNumber(customerNumber);
 		customerRegister.addCustomer(customer);
 
@@ -147,53 +147,54 @@ public class Controller {
 		customerRegister.removeCustomer(customerNumber);
 	}
 
-	public void changeCustomer(String name, String address, String customerNumber) {
+	public void changeCustomer(String customerName, String customerAddress, String customerNumber) {
 		customer = this.findCustomer(customerNumber);
-		customer.setAddress(address);
-		customer.setName(name);
+		customer.setCustomerAddress(customerAddress);
+		customer.setCustomerName(customerName);
 	}
-
-	public ArrayList<Product> getArrayListProducts() {
-		ArrayList<Product> products = productRegister.getProductRegister();
+	
+	// Is method used?
+	public ArrayList<Product> getArrayListProducts() { 
+		ArrayList<Product> products = productRegister.getProductRegister(); 
 		return products;
 	}
 
-	public void addProduct(String name, String category, double price) {
+	public void addProduct(String productName, String productCategory, double productPrice) {
 		product = new Product();
-		product.setCategory(category);
-		product.setName(name);
-		product.setPrice(price);
+		product.setCategory(productCategory);
+		product.setName(productName);
+		product.setPrice(productPrice);
 		productRegister.addProduct(product);
 	}
 
-	public Product findProduct(String name) {
-		product = productRegister.findProduct(name);
+	public Product findProduct(String productName) {
+		product = productRegister.findProduct(productName);
 		if (product != null) {
 			return product;
 		}
 		return null;
 	}
 
-	public void removeProduct(String name) {
-		productRegister.removeProduct(name);
+	public void removeProduct(String productName) {
+		productRegister.removeProduct(productName);
 
 	}
-
+	// Is method used?
 	public ArrayList<Unit> getArrayListUnits() {
 		ArrayList<Unit> units = product.getUnitList();
 		return units;
 	}
 
-	public void addUnit(String serialNumber, String name) {
-		product = this.findProduct(name);
+	public void addUnit(String serialNumber, String productName) {
+		product = this.findProduct(productName);
 		unit = new Unit();
 		unit.setSerialNumber(serialNumber);
 		product.addUnit(unit);
 
 	}
 
-	public Unit findUnit(String serialNumber, String name) {
-		product = this.findProduct(name);
+	public Unit findUnit(String serialNumber, String productName) {
+		product = this.findProduct(productName);
 		if (product != null) {
 			return product.findUnit(serialNumber);
 		}
@@ -201,8 +202,8 @@ public class Controller {
 
 	}
 
-	public void removeUnit(String serialNumber, String name) {
-		product = this.findProduct(name);
+	public void removeUnit(String serialNumber, String productName) {
+		product = this.findProduct(productName);
 		product.removeUnit(serialNumber);
 	}
 
@@ -238,12 +239,12 @@ public class Controller {
 		}
 		return message;
 	}
-	public void changeProduct (String productName, String category, double price) {
+	public void changeProduct (String productName, String productCategory, double productPrice) {
 		product = this.findProduct(productName);
 		if (product!=null) {
-			if (product.getCategory() != category || product.getPrice()!=price) {
-				product.setCategory(category);
-				product.setPrice(price);
+			if (product.getCategory() != productCategory || product.getPrice()!=productPrice) {
+				product.setCategory(productCategory);
+				product.setPrice(productPrice);
 			}
 			
 		}
@@ -251,7 +252,7 @@ public class Controller {
 		
 	}
 	public Order findOrder(String orderID) {
-		for (Customer customer : customerRegister.getRegister()) {
+		for (Customer customer : customerRegister.getCustomerRegister()) {
 			order = customer.findOrder(orderID);
 			if (order != null) {
 				return order;
@@ -261,7 +262,7 @@ public class Controller {
 		return null;
 	}
 	public boolean IsOrderIDTaken (String orderID) {
-		for (Customer customer : customerRegister.getRegister()) {
+		for (Customer customer : customerRegister.getCustomerRegister()) {
 			if (customer !=null) {
 				for (Order order : customer.getOrderList()) {
 					if (order.getOrderID().equals(orderID)) {

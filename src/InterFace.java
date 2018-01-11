@@ -344,6 +344,9 @@ public class InterFace {
 				else if (product==null) {
 					textOutput.append("Det finns inga exemplar för produkten då den ej existerar. \n");
 				}
+				else if (controller.getArrayListUnits().size()==0) {
+					textOutput.append("Det finns inga exemplar kvar av produkt: " + product.getName() + ".\n");
+				}
 				else {	
 					textOutput.append("Produkten " + product.getName() + " har följande exemplar: \n");
 					textOutput.append(controller.showProductUnits(productName));
@@ -539,7 +542,7 @@ public class InterFace {
 					textOutput_2.append("Det finns inte en kund med serienummer: " + customerNumber + " i registret. \n" );
 				}
 				else {
-					textOutput_2.append("En sökning på kundnummer " + customerNumber + " ger \nNamn: " + customer.getName() + " \nAdress: " + customer.getAddress() + "\n");
+					textOutput_2.append("En sökning på kundnummer " + customerNumber + " ger \nNamn: " + customer.getCustomerName() + " \nAdress: " + customer.getCustomerAddress() + "\n");
 					if (customer.getOrderList().isEmpty()) {
 						textOutput_2.append("Detta kundnummer har f�r n�rvarande ingen aktiv order. \n");
 					}
@@ -573,10 +576,10 @@ public class InterFace {
 					textOutput_2.append("Kund med kundnummer " + customerNumber + " finns inte i registret. \n");
 				}
 				else {
-					String tempName = customer.getName();
-					String tempAddress = customer.getAddress();
+					String tempName = customer.getCustomerName();
+					String tempAddress = customer.getCustomerAddress();
 					controller.changeCustomer(name, address, customerNumber);
-					textOutput_2.append("Kund med kundnummer " + customer.getCustomerNumber() + " har ändrat namn och address från: \nNamn: " + tempName + "\nAdress: " + tempAddress + "\ntill \nNamn: " + customer.getName() + "\nAdress: " + customer.getAddress() +"\n");
+					textOutput_2.append("Kund med kundnummer " + customer.getCustomerNumber() + " har ändrat namn och address från: \nNamn: " + tempName + "\nAdress: " + tempAddress + "\ntill \nNamn: " + customer.getCustomerName() + "\nAdress: " + customer.getCustomerAddress() +"\n");
 					
 				}
 				textField_customerName.setText("");
@@ -637,7 +640,7 @@ public class InterFace {
 				Order order = controller.findOrder(orderID);
 				
 				if (textField_orderId.getText().isEmpty() || textField_deliveryDate.getText().isEmpty() || textField_customerNumber.getText().isEmpty()) {
-					textOutput_2.append("Fyll i ett orderID och leveransdatum. \n");
+					textOutput_2.append("Fyll i kundnummer, ett orderID och leveransdatum. \n");
 				}
 				else if (order != null) {
 					textOutput_2.append("Ordern du försöker skapa finns redan. \n");
@@ -746,6 +749,9 @@ public class InterFace {
 					if (controller.enoughInStock(orderID, productName, quantity)==false) {
 						textOutput_2.append("Kvantiteten du har angett �verstiger lagerstatus \n");
 					}
+					else if (quantity==0) {
+						textOutput_2.append("Antal m�ste �verstiga '0'");
+					}
 					else {
 						controller.addOrderLines(orderID, quantity, orderLineNumber, productName);
 						textOutput_2.append(quantity + " st av " + productName + " har lagts till på orderrad " + orderLineNumber + " i order " + order.getOrderID() +".\n" );
@@ -758,6 +764,7 @@ public class InterFace {
 				}
 				textField_productName.setText("");
 				textField_orderId.setText("");
+				textField_quantity.setText("0");
 				textField_orderLineNumber.setText("");
 				
 			}

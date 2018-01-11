@@ -26,8 +26,8 @@ public class Order {
 		return customerOrder;
 	}
 
-	public void setCustomerOrder(Customer CustomerOrder) {
-		this.customerOrder = CustomerOrder;
+	public void setCustomerOrder(Customer customerOrder) {
+		this.customerOrder = customerOrder;
 	}
 
 	public ArrayList<OrderLine> getLines() {
@@ -42,17 +42,17 @@ public class Order {
 		orderLines.add(orderLine);
 	}
 
-	public OrderLine findOrderLine(String number) {
+	public OrderLine findOrderLine(String orderLineNumber) {
 		for (OrderLine orderLine : orderLines) {
-			if (orderLine.getNumber().equals(number)) {
+			if (orderLine.getNumber().equals(orderLineNumber)) {
 				return orderLine;
 			}
 		}
 		return null;
 	}
 
-	public void removeOrderLine(String number) {
-		OrderLine orderLine = this.findOrderLine(number);
+	public void removeOrderLine(String orderLineNumber) {
+		OrderLine orderLine = this.findOrderLine(orderLineNumber);
 		if (orderLine != null) {
 			orderLines.remove(orderLine);
 		}

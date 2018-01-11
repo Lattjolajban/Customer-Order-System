@@ -2,34 +2,34 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Product {
-	private String name;
-	private String category;
-	private double price;
+	private String productName;
+	private String productCategory;
+	private double productPrice;
 	private Random randomGenerator = new Random();
 	private ArrayList<Unit> unitList = new ArrayList<Unit>();
 
 	public String getName() {
-		return name;
+		return productName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setName(String productName) {
+		this.productName = productName;
 	}
 
 	public String getCategory() {
-		return category;
+		return productCategory;
 	}
 
-	public void setCategory(String category) {
-		this.category = category;
+	public void setCategory(String productCategory) {
+		this.productCategory = productCategory;
 	}
 
 	public double getPrice() {
-		return price;
+		return productPrice;
 	}
 
-	public void setPrice(double price) {
-		this.price = price;
+	public void setPrice(double productPrice) {
+		this.productPrice = productPrice;
 	}
 
 	public ArrayList<Unit> getUnitList() {
@@ -61,21 +61,13 @@ public class Product {
 		}
 	}
 
-	/*public int countProductUnits() {
-		int counter = 0;
-		if (unitList.iterator().hasNext()) {
-			counter = counter + 1;
-		}
-		return counter;
-
-	} */
 	public Unit getRandomUnit () {
 		Unit unit = unitList.get(randomGenerator.nextInt(unitList.size()));
 		return unit;
 	}
 
 	public void removeRandomUnit() {
-		//unitList.remove(randomGenerator.nextInt(unitList.size()));
+		//unitList.remove(randomGenerator.nextInt(unitList.size())); //experimental!
 		unitList.remove(this.getRandomUnit());
 	}
 

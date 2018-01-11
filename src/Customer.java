@@ -3,8 +3,8 @@ import java.util.ArrayList;
 
 public class Customer {
 	private String customerNumber;
-	private String name;
-	private String address;
+	private String customerName;
+	private String customerAddress;
 	private ArrayList<Order> orderList = new ArrayList<Order>();
 
 	public String getCustomerNumber() {
@@ -15,20 +15,20 @@ public class Customer {
 		this.customerNumber = customerNumber;
 	}
 
-	public String getName() {
-		return name;
+	public String getCustomerName() {
+		return customerName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
 	}
 
-	public String getAddress() {
-		return address;
+	public String getCustomerAddress() {
+		return customerAddress;
 	}
 
-	public void setAddress(String address) {
-		this.address = address;
+	public void setCustomerAddress(String customerAddress) {
+		this.customerAddress = customerAddress;
 	}
 
 	public ArrayList<Order> getOrderList() {
