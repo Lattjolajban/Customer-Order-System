@@ -16,9 +16,9 @@ public class Controller {
 
 	JFrame interFace;
 
-	public Controller(CustomerRegister customerRegister, ProductRegister productRegister, JFrame interFace) {
-		this.customerRegister = customerRegister;
-		this.productRegister = productRegister;
+	public Controller(JFrame interFace) {
+		customerRegister = new CustomerRegister ();
+		productRegister = new ProductRegister();
 		this.interFace = interFace;
 
 	}
@@ -29,6 +29,7 @@ public class Controller {
 	}
 
 	public void addOrder(String orderID, String deliveryDate, String customerNumber) {
+		if (this.IsOrderIDTaken(orderID)==false) {
 		order = new Order();
 		customer = this.findCustomer(customerNumber);
 		// if (order != customer.findOrder(orderID)) {
@@ -36,15 +37,7 @@ public class Controller {
 		order.setDeliveryDate(deliveryDate);
 		customer.addOrder(order);
 		order.setCustomerOrder(customer); // Detta kanske behöver findCustomer i registret
-	}
-
-	public Order findOrder(String orderID) {
-		order = customer.findOrder(orderID);
-		if (order != null) {
-			return order;
 		}
-
-		return null;
 	}
 
 	public void removeOrder(String orderID, String customerNumber) {
@@ -111,8 +104,10 @@ public class Controller {
 		order = this.findOrder(orderID);
 		product = this.findProduct(productName);
 		orderLine = this.findOrderLine(orderLineNumber, orderID);
-		if (orderLine.getProduct() == product) {
+		if (orderLine!=null) {
+			if (product.getName() == orderLine.getProduct().getName()) {
 			return true;
+			}	
 		}
 		return false;
 	}
@@ -190,13 +185,6 @@ public class Controller {
 
 	}
 
-	public void changeProduct(String name, String category, double price) {
-		product = this.findProduct(name);
-		product.setCategory(category);
-		product.setPrice(price);
-
-	}
-
 	public ArrayList<Unit> getArrayListUnits() {
 		ArrayList<Unit> units = product.getUnitList();
 		return units;
@@ -235,5 +223,59 @@ public class Controller {
 		return totalPrice;
 
 	}
+	public String showProductUnits (String productName) {
+		product = this.findProduct(productName);
+		String message = "";
+		for (Unit unit : product.getUnitList()) {
+			if (unit!=null) {
+				message += "Serienummer: " + unit.getSerialNumber() + "\n";
+				
+			}
+		}
+		return message;
+	}
+	public String showCustomerOrders (String customerNumber) {
+		customer = this.findCustomer(customerNumber);
+		String message = "";
+		for (Order order : customer.getOrderList()) {
+			if (order!=null) {
+				message += "Ordernummer: " + order.getOrderID() + "\n";
+			}
+		}
+		return message;
+	}
+	public void changeProduct (String productName, String category, double price) {
+		product = this.findProduct(productName);
+		if (product!=null) {
+			if (product.getCategory() != category || product.getPrice()!=price) {
+				product.setCategory(category);
+				product.setPrice(price);
+			}
+			
+		}
+				
+		
+	}
+	public Order findOrder(String orderID) {
+		order = customer.findOrder(orderID);
+		if (order != null) {
+			return order;
+		}
+
+		return null;
+	}
+	public boolean IsOrderIDTaken (String orderID) {
+		for (Customer customer : customerRegister.getRegister()) {
+			if (customer !=null) {
+				for (Order order : customer.getOrderList()) {
+					if (order.getOrderID().equals(orderID)) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+
 
 }

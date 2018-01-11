@@ -35,8 +35,6 @@ public class InterFace {
 	private JTextArea textOutput;
 	
 	private Controller controller; // Connects to the controller
-	private ProductRegister productRegister;
-	private CustomerRegister customerRegister;
 	
 
 	private JTextField textField_customerName;
@@ -81,9 +79,7 @@ public class InterFace {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new CardLayout(0, 0));
 		
-		productRegister = new ProductRegister ();
-		customerRegister = new CustomerRegister();
-		controller = new Controller (customerRegister, productRegister, frame);
+		controller = new Controller (frame);
 		
 		// MENU PANEL
 		
@@ -154,7 +150,7 @@ public class InterFace {
 				double price = Double.parseDouble(priceString);
 				Product product = controller.findProduct(name);
 				
-				if (textField_name.getText().isEmpty()) {
+				if (textField_name.getText().isEmpty() || textField_category.getText().isEmpty()) {
 					textOutput.append("Fyll i produktens namn, kategori och pris. \n");
 				}
 				else if (controller.getArrayListProducts().contains(product)) {
@@ -180,7 +176,7 @@ public class InterFace {
 				Product product = controller.findProduct(name);
 				
 				if (textField_name.getText().isEmpty()) {
-					textOutput.append("Fyll i Produktnamn. \n");
+					textOutput.append("Fyll i produktnamn. \n");
 				}
 				else if (product==null) {
 					textOutput.append("Produkten kan inte hittas. \n");
@@ -230,19 +226,22 @@ public class InterFace {
 		JButton btnChangeProduct = new JButton("Ändra");
 		btnChangeProduct.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String name = textField_name.getText();
+				String productName = textField_name.getText();
 				String category = textField_category.getText();
 				String priceString = textField_price.getText();
 				double price = Double.parseDouble(priceString);
-				Product product = controller.findProduct(name);
+				Product product = controller.findProduct(productName);
 				
 				if(textField_name.getText().isEmpty() || textField_category.getText().isEmpty() || textField_price.getText().isEmpty()) {
 					textOutput.append("Fyll i samtliga produktfält. \n");
 					}
 				else {
-					product.setCategory(category);
-					product.setPrice(price);
-					textOutput.append("Produkt " + product.getName() + " har nu ändrats till följande: \nKategori: " + product.getCategory() + "\nPris: " + product.getPrice()+"\n");
+					String tempCategory = product.getCategory();
+					Double tempPrice = product.getPrice();
+					
+					
+					controller.changeProduct(productName, category, price);
+					textOutput.append("Produkt " + product.getName() + " har ändrats fr�n: \nKategori: "+ tempCategory + "\nPris: " + tempPrice.toString() + "\nTill följande: \nKategori: " + product.getCategory() + "\nPris: " + product.getPrice()+"\n");
 				}
 				
 				textField_name.setText("");
@@ -332,25 +331,17 @@ public class InterFace {
 		JButton btnShowUnits = new JButton("Visa exemplar");
 		btnShowUnits.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String name = textField_name.getText();
-				Product p = controller.findProduct(name);
-				String string="";
+				String productName = textField_name.getText();
+				Product product = controller.findProduct(productName);
 				if (textField_name.getText().isEmpty()) {
 					textOutput.append("Fyll i namn på produkten. \n");
 				}
-				else if (p==null) {
+				else if (product==null) {
 					textOutput.append("Det finns inga exemplar för produkten då den ej existerar. \n");
 				}
-				else {
-				for (Unit temp : p.getUnitList()) {
-					if (temp!=null) {
-						string += ("Serienummer: " +temp.getSerialNumber()) + "\n";
-						
-					}
-					
-				}
-				
-				textOutput.append("Produkten " + p.getName() + " har följande exemplar: \n" + string);
+				else {	
+					textOutput.append("Produkten " + product.getName() + " har följande exemplar: \n");
+					textOutput.append(controller.showProductUnits(productName));
 				}
 			}
 		});
@@ -543,7 +534,14 @@ public class InterFace {
 					textOutput_2.append("Det finns inte en kund med serienummer: " + customerNumber + " i registret. \n" );
 				}
 				else {
-					textOutput_2.append("En sökning på serienumret " + customerNumber + " har namnet " + customer.getName() +".\n");
+					textOutput_2.append("En sökning på kundnummer " + customerNumber + " ger \nNamn: " + customer.getName() + " \nAdress: " + customer.getAddress() + "\n");
+					if (customer.getOrderList().isEmpty()) {
+						textOutput_2.append("Detta kundnummer har f�r n�rvarande ingen aktiv order. \n");
+					}
+					else {
+					textOutput_2.append("F�ljande order finns p� kundnummer "+ customer.getCustomerNumber() + ": \n");
+					textOutput_2.append(controller.showCustomerOrders(customerNumber));
+					}
 				}
 				textField_customerName.setText("");
 				textField_address.setText("");
@@ -640,12 +638,16 @@ public class InterFace {
 					textOutput_2.append("Ordern du försöker skapa finns redan. \n");
 				}
 				else {
+					if (controller.IsOrderIDTaken(orderID)) {
+						textOutput_2.append("Det finns redan en kund som har en order med det orderID:t \n");
+					}
+					else {
 					controller.addOrder(orderID, deliveryDate, customerNumber);
 					
-					textOutput_2.append("En order med id " + orderID + " på kundnummer " + customer.getCustomerNumber() + " har lagts till.\n" );
+					textOutput_2.append("En order med id " + orderID + " på kundnummer " + customer.getCustomerNumber() + " har skapats.\n" );
 					
 						//textOutput_2.append("Det finns ingen med kundnummer " + customerNumber + ".\n");
-					
+					}
 					
 					
 				} 
@@ -713,7 +715,7 @@ public class InterFace {
 		JButton btnAddOrderLine = new JButton("Lägg till");
 		btnAddOrderLine.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				double sum = 0.00;
+				Double sum = 0.00;
 				String productName = textField_productName.getText();
 				int quantity = Integer.parseInt(textField_quantity.getText());
 				String orderID = textField_orderId.getText();
@@ -722,8 +724,8 @@ public class InterFace {
 				Product product = controller.findProduct(productName);
 				
 				
-				if (textField_productName.getText().isEmpty() || textField_quantity.getText().isEmpty() || textField_orderId.getText().isEmpty()) {
-					textOutput_2.append("Fyll i orderID, produktnamn och antal. \n");
+				if (textField_productName.getText().isEmpty() || textField_quantity.getText().isEmpty() || textField_orderId.getText().isEmpty() || textField_orderLineNumber.getText().isEmpty()) {
+					textOutput_2.append("Fyll i orderID, produktnamn, antal och orderradnummer. \n");
 				}
 				else if (order == null) {
 					textOutput_2.append("En order med det orderID:t finns inte i systemet. \n");
@@ -742,9 +744,9 @@ public class InterFace {
 					else {
 						controller.addOrderLines(orderID, quantity, orderLineNumber, productName);
 						textOutput_2.append(quantity + " st av " + productName + " har lagts till på orderrad " + orderLineNumber + " i order " + order.getOrderID() +".\n" );
-						//sum = controller.sumOrder(orderID);
-						//textField_sumOrder.setText(sum.toString());
-						textOutput_2.append ("Orderraden har nu " + controller.findOrderLine(orderLineNumber, orderID).getQuantity() + " av produkten " + controller.findOrderLine(orderLineNumber, orderID).getProduct().getName() + "\n");
+						sum = controller.sumOrder(orderID);
+						textField_sumOrder.setText(sum.toString());
+						textOutput_2.append ("Orderraden har nu " + controller.findOrderLine(orderLineNumber, orderID).getQuantity() + " st av produkten " + controller.findOrderLine(orderLineNumber, orderID).getProduct().getName() + "\n");
 					}
 					
 					
