@@ -611,8 +611,10 @@ public class InterFace {
 				String orderID = textField_orderId.getText();
 				String deliveryDate = textField_deliveryDate.getText();
 				String customerNumber = textField_customerNumber.getText();
+				
 				Customer customer = controller.findCustomer(customerNumber);
-				Order order = controller.findOrder(orderID);
+				Order order = controller.findCustomerOrder(orderID, customerNumber);
+				
 				
 				if (textField_orderId.getText().isEmpty() || textField_deliveryDate.getText().isEmpty() || textField_customerNumber.getText().isEmpty()) {
 					textOutput_2.append("Fyll i ett orderID och leveransdatum \n");
@@ -626,7 +628,8 @@ public class InterFace {
 						textOutput_2.append("Det finns ingen med kundnummer " + customerNumber + ".\n");
 					}
 					else {
-						textOutput_2.append("En order med id " + order.getOrderID() + " har skapats med leverans den " + order.getDeliveryDate() + " på kundnummer " + customer.getCustomerNumber() + ".\n" );
+						//textOutput_2.append("En order med id " + order.getOrderID() + " har skapats med leverans den " + order.getDeliveryDate() + " på kundnummer " + customer.getCustomerNumber() + ".\n" );
+						textOutput_2.append("Röv");
 					}
 					
 				}

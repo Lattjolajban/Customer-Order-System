@@ -27,6 +27,7 @@ public class Controller {
 	public void addOrder(String orderID, String deliveryDate, String customerNumber) {
 		Order order = new Order();
 		Customer customer = this.findCustomer(customerNumber);
+		
 		order.setOrderID(orderID);
 		order.setDeliveryDate(deliveryDate);
 		customer.addOrder(order);
@@ -38,6 +39,17 @@ public class Controller {
 		Order order = customer.findOrder(orderID);
 		if (order != null) {
 			return order;
+		}
+		return null;
+	}
+	public Order findCustomerOrder (String orderID, String customerNumber) {
+		Customer customer = customerRegister.findCustomer(customerNumber);
+		if (customer != null) {
+			Order order = customer.findOrder(orderID);
+			if (order!=null) {
+				return order;
+			}
+			
 		}
 		return null;
 	}
