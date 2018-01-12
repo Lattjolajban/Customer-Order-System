@@ -1,6 +1,6 @@
 public class Unit {
 	private String serialNumber;
-	private Product p;
+	private Product product;
 
 	public String getSerialNumber() {
 		return serialNumber;
@@ -11,11 +11,11 @@ public class Unit {
 	}
 
 	public Product getProduct() {
-		return p;
+		return product;
 	}
 
-	public void setProduct(Product p) {
-		this.p = p;
+	public void setProduct(Product product) {
+		this.product = product;
 	}
 
 }
