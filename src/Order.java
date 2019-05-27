@@ -3,8 +3,8 @@ import java.util.ArrayList;
 public class Order {
 	private String orderID;
 	private String deliveryDate;
-	private Customer CustomerOrder;
-	private ArrayList<OrderLine> lines = new ArrayList<OrderLine>();
+	private Customer customerOrder;
+	private ArrayList<OrderLine> orderLines = new ArrayList<OrderLine>();
 
 	public String getOrderID() {
 		return orderID;
@@ -23,40 +23,46 @@ public class Order {
 	}
 
 	public Customer getCustomerOrder() {
-		return CustomerOrder;
+		return customerOrder;
 	}
 
-	public void setCustomerOrder(Customer CustomerOrder) {
-		this.CustomerOrder = CustomerOrder;
+	public void setCustomerOrder(Customer customerOrder) {
+		this.customerOrder = customerOrder;
 	}
 
 	public ArrayList<OrderLine> getLines() {
-		return lines;
+		return orderLines;
 	}
 
-	public void setLines(ArrayList<OrderLine> line) {
-		this.lines = line;
+	public void setLines(ArrayList<OrderLine> orderLines) {
+		this.orderLines = orderLines;
 	}
 
-	public void addOrderLine(OrderLine r) {
-		lines.add(r);
+	public void addOrderLine(OrderLine orderLine) {
+		orderLines.add(orderLine);
 	}
 
-	public void removeOrderLine(String number) {
-		for (OrderLine line : lines) {
-			if (line.getNumber().equals(number)) {
-				lines.remove(line);
-			}
-		}
-	}
-
-	public OrderLine findOrderLine(String number) {
-		for (OrderLine line : lines) {
-			if (line.getNumber().equals(number)){
-				return line;
+	public OrderLine findOrderLine(String orderLineNumber) {
+		for (OrderLine orderLine : orderLines) {
+			if (orderLine.getNumber().equals(orderLineNumber)) {
+				return orderLine;
 			}
 		}
 		return null;
 	}
 
+	public void removeOrderLine(String orderLineNumber) {
+		OrderLine orderLine = this.findOrderLine(orderLineNumber);
+		if (orderLine != null) {
+			orderLines.remove(orderLine);
+		}
+	}
+	 public double sumOrder (String orderID) {
+		double sum = 0.00;
+		for (OrderLine orderLine : orderLines) {
+			sum =+ orderLine.getProduct().getPrice() * orderLine.getQuantity();
+			
+		}
+		return sum;
+	} 
 }

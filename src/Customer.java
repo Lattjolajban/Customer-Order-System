@@ -3,8 +3,8 @@ import java.util.ArrayList;
 
 public class Customer {
 	private String customerNumber;
-	private String name;
-	private String address;
+	private String customerName;
+	private String customerAddress;
 	private ArrayList<Order> orderList = new ArrayList<Order>();
 
 	public String getCustomerNumber() {
@@ -15,20 +15,20 @@ public class Customer {
 		this.customerNumber = customerNumber;
 	}
 
-	public String getName() {
-		return name;
+	public String getCustomerName() {
+		return customerName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
 	}
 
-	public String getAddress() {
-		return address;
+	public String getCustomerAddress() {
+		return customerAddress;
 	}
 
-	public void setAddress(String address) {
-		this.address = address;
+	public void setCustomerAddress(String customerAddress) {
+		this.customerAddress = customerAddress;
 	}
 
 	public ArrayList<Order> getOrderList() {
@@ -39,32 +39,39 @@ public class Customer {
 		this.orderList = orderList;
 	}
 
-	public void addOrder(Order o) {
-		orderList.add(o);
+	public void addOrder(Order order) {
+		orderList.add(order);
 	}
 
-	public void removeOrder(Order o) {
-		orderList.remove(o);
-	}
+
 
 	public Order findOrder(String orderID) {
-		for (Order o : orderList) {
-			if (o.getOrderID().equals(orderID)) {
-				return o;
+		for (Order order : orderList) {
+			if (order.getOrderID().equals(orderID)) {
+				return order;
 			}
 		}
 
 		return null;
 	}
+	
+	public void removeOrder(String orderID) {
+		Order order = this.findOrder(orderID);
+			if (order!=null) {
+				orderList.remove(order);
+			}
+		}
+		
+	
 
-	public Double summeraOrder(String orderID) {
+	/* public Double summeraOrder(String orderID) {
 		double summa = 0;
-		Order o = this.findOrder(orderID);
-		for (OrderLine r : o.getLines()) {
-			summa += r.getProduct().getPrice() * r.getQuantity();
+		Order order = this.findOrder(orderID);
+		for (OrderLine orderLine : order.getLines()) {
+			summa += orderLine.getProduct().getPrice() * orderLine.getQuantity();
 
 		}
 		return summa;
-	}
+	} */
 
 }

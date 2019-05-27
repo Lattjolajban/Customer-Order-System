@@ -1,15 +1,15 @@
 public class OrderLine {
-	private String number;
+	private String orderLineNumber;
 	private int quantity;
-	private Order o;
-	private Product p;
+	private Order order;
+	private Product product;
 
 	public String getNumber() {
-		return number;
+		return orderLineNumber;
 	}
 
-	public void setNumber(String number) {
-		this.number = number;
+	public void setNumber(String orderLineNumber) {
+		this.orderLineNumber= orderLineNumber;
 	}
 
 	public int getQuantity() {
@@ -17,31 +17,36 @@ public class OrderLine {
 	}
 
 	public void setQuantity(int quantity) {
-		this.quantity = quantity;
+		this.quantity =  quantity;
 	}
 
-	public void setOrder(Order o) {
-		this.o = o;
+	public void setOrder(Order order) {
+		this.order = order;
 	}
 
 	public Order getOrder() {
-		return o;
+		return order;
 	}
 
 	public Product getProduct() {
-		return p;
+		return product;
 	}
 
-	public void setProduct(Product p) {
-		this.p = p;
+	public void setProduct(Product product) {
+		this.product = product;
 	}
 
-	public void MinusOnequantity(int quantity) {
-		this.quantity = quantity - 1;
+	public void MinusOnequantity() {
+		this.quantity--;
 	}
 
-	public void PlusOnequantity(int quantity) {
-		this.quantity = quantity + 1;
+	public void PlusOnequantity() {
+		this.quantity++;
+	}
+	public double getTotalPrice () {
+		double totalSum = 0;
+		totalSum = (this.getProduct().getPrice()*this.getQuantity());
+		return totalSum;
 	}
 
 }

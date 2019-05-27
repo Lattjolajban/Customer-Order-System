@@ -2,41 +2,40 @@
 import java.util.ArrayList;
 
 public class CustomerRegister {
-	private ArrayList<Customer> register = new ArrayList<Customer>();
+	private ArrayList<Customer> customerRegister = new ArrayList<Customer>();
 
-	public ArrayList<Customer> getRegister() {
-		return register;
+	public ArrayList<Customer> getCustomerRegister() {
+		return customerRegister;
 	}
 
-	public void setRegister(ArrayList<Customer> register) {
-		this.register = register;
+	public void setCustomerRegister(ArrayList<Customer> register) {
+		this.customerRegister = register;
 	}
 
-	public void addCustomer(Customer c) {
-		register.add(c);
+	public void addCustomer(Customer customer) {
+		customerRegister.add(customer);
 	}
 
-	public Customer findCustomer(String CustomerNumber) {
-		for (Customer c : register) {
-			if (c.getCustomerNumber().equals(CustomerNumber)) {
-				return c;
+	public Customer findCustomer(String customerNumber) {
+		for (Customer customer : customerRegister) {
+			if (customer.getCustomerNumber().equals(customerNumber)) {
+				return customer;
 			}
 		}
 		return null;
 	}
 
-	public void removeCustomer(String CustomerNumber) {
-		for (Customer c : register) {
-			if (c.getCustomerNumber().equals(CustomerNumber)) {
-				register.remove(c);
-			}
+	public void removeCustomer(String customerNumber) {
+		Customer customer = this.findCustomer(customerNumber);
+		if (customer != null) {
+			customerRegister.remove(customer);
 		}
 	}
 
-	public void andraCustomer(String CustomerNumber, String address, String name) {
-		Customer c = this.findCustomer(CustomerNumber);
-		c.setAddress(address);
-		c.setName(name);
+	public void andraCustomer(String customerNumber, String customerAddress, String customerName) {
+		Customer customer = this.findCustomer(customerNumber);
+		customer.setCustomerAddress(customerAddress);
+		customer.setCustomerName(customerName);
 	}
 
 }
